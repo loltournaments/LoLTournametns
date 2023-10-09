@@ -1,2 +1,0 @@
-# LoLTournametns
-LoL Tournaments WebGL
