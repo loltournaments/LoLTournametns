@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "hoSZ2mjn0WJ9T/o3glDInMoamDj+ehdY3gMZNB/qGq0=",
+  "Source": "LoLTournaments.WebApi",
+  "BasePath": "_content/LoLTournaments.WebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

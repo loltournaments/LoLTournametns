@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoLTournaments.Domain", "LoLTournaments.Domain\LoLTournaments.Domain.csproj", "{088BE936-1C5F-48C4-987F-AE3E210D46F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoLTournaments.Shared", "LoLTournaments.Shared\LoLTournaments.Shared.csproj", "{B30E7A28-3B8C-4CA8-A07D-7499E69AE31F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoLTournaments.WebApi", "LoLTournaments.WebApi\LoLTournaments.WebApi.csproj", "{30ACC24D-B116-4CF9-B4CC-0BF323C58B70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoLTournaments.Infrastructure", "LoLTournaments.Infrastructure\LoLTournaments.Infrastructure.csproj", "{A71EA597-BA7E-4AE7-9B5E-FDA8AA1E4360}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{088BE936-1C5F-48C4-987F-AE3E210D46F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{088BE936-1C5F-48C4-987F-AE3E210D46F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{088BE936-1C5F-48C4-987F-AE3E210D46F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{088BE936-1C5F-48C4-987F-AE3E210D46F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B30E7A28-3B8C-4CA8-A07D-7499E69AE31F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B30E7A28-3B8C-4CA8-A07D-7499E69AE31F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B30E7A28-3B8C-4CA8-A07D-7499E69AE31F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B30E7A28-3B8C-4CA8-A07D-7499E69AE31F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30ACC24D-B116-4CF9-B4CC-0BF323C58B70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30ACC24D-B116-4CF9-B4CC-0BF323C58B70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30ACC24D-B116-4CF9-B4CC-0BF323C58B70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30ACC24D-B116-4CF9-B4CC-0BF323C58B70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A71EA597-BA7E-4AE7-9B5E-FDA8AA1E4360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A71EA597-BA7E-4AE7-9B5E-FDA8AA1E4360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A71EA597-BA7E-4AE7-9B5E-FDA8AA1E4360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A71EA597-BA7E-4AE7-9B5E-FDA8AA1E4360}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

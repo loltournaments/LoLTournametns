@@ -1,0 +1,206 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Migrations\\LoLTournaments.Migrations.csproj": {}
+  },
+  "projects": {
+    "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Domain\\LoLTournaments.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Domain\\LoLTournaments.Domain.csproj",
+        "projectName": "LoLTournaments.Domain",
+        "projectPath": "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Domain\\LoLTournaments.Domain.csproj",
+        "packagesPath": "C:\\Users\\Mr. Cringe\\.nuget\\packages\\",
+        "outputPath": "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Mr. Cringe\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Shared\\LoLTournaments.Shared.csproj": {
+                "projectPath": "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Shared\\LoLTournaments.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.414\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Migrations\\LoLTournaments.Migrations.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Migrations\\LoLTournaments.Migrations.csproj",
+        "projectName": "LoLTournaments.Migrations",
+        "projectPath": "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Migrations\\LoLTournaments.Migrations.csproj",
+        "packagesPath": "C:\\Users\\Mr. Cringe\\.nuget\\packages\\",
+        "outputPath": "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Migrations\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Mr. Cringe\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Domain\\LoLTournaments.Domain.csproj": {
+                "projectPath": "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Domain\\LoLTournaments.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.414\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Shared\\LoLTournaments.Shared.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Shared\\LoLTournaments.Shared.csproj",
+        "projectName": "LoLTournaments.Shared",
+        "projectPath": "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Shared\\LoLTournaments.Shared.csproj",
+        "packagesPath": "C:\\Users\\Mr. Cringe\\.nuget\\packages\\",
+        "outputPath": "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments-Server\\LoLTournaments.Shared\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Mr. Cringe\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.414\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
