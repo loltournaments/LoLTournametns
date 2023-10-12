@@ -10,3 +10,15 @@ D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments-Server\LoLTournaments.S
 D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments-Server\LoLTournaments.Shared\obj\Debug\net6.0\refint\LoLTournaments.Shared.dll
 D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments-Server\LoLTournaments.Shared\obj\Debug\net6.0\LoLTournaments.Shared.pdb
 D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments-Server\LoLTournaments.Shared\obj\Debug\net6.0\ref\LoLTournaments.Shared.dll
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.Shared\bin\Debug\net6.0\LoLTournaments.Shared.deps.json
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.Shared\bin\Debug\net6.0\LoLTournaments.Shared.dll
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.Shared\bin\Debug\net6.0\LoLTournaments.Shared.pdb
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.Shared\obj\Debug\net6.0\LoLTournaments.Shared.csproj.AssemblyReference.cache
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.Shared\obj\Debug\net6.0\LoLTournaments.Shared.GeneratedMSBuildEditorConfig.editorconfig
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.Shared\obj\Debug\net6.0\LoLTournaments.Shared.AssemblyInfoInputs.cache
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.Shared\obj\Debug\net6.0\LoLTournaments.Shared.AssemblyInfo.cs
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.Shared\obj\Debug\net6.0\LoLTournaments.Shared.csproj.CoreCompileInputs.cache
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.Shared\obj\Debug\net6.0\LoLTournaments.Shared.dll
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.Shared\obj\Debug\net6.0\refint\LoLTournaments.Shared.dll
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.Shared\obj\Debug\net6.0\LoLTournaments.Shared.pdb
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.Shared\obj\Debug\net6.0\ref\LoLTournaments.Shared.dll

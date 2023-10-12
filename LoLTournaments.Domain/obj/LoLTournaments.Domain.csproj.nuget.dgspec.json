@@ -45,9 +45,9 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "Microsoft.EntityFrameworkCore": {
+            "Microsoft.Extensions.Identity.Stores": {
               "target": "Package",
-              "version": "[7.0.2, )"
+              "version": "[6.0.23, )"
             }
           },
           "imports": [

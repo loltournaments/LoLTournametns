@@ -1,15 +1,13 @@
 ﻿using LoLTournaments.Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace LoLTournaments.Infrastructure.Presistence
 {
 
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<UserEntity>
     {
         public AppDbContext(DbContextOptions options) : base(options) {}
-
-
-        public DbSet<UserEntity> Users { get; set; }
     }
 
 }
