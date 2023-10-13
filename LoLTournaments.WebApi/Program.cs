@@ -1,3 +1,4 @@
+using LoLTournaments.Application.Infrastructure;
 using LoLTournaments.Domain.Abstractions;
 using LoLTournaments.Domain.Entities;
 using LoLTournaments.Infrastructure.Presistence;
@@ -20,10 +21,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
                 o.MigrationsHistoryTable("__EFMigrationsHistory", "public");
             });
 });
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options => //CookieAuthenticationOptions
     {
-        options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+        options.LoginPath = new PathString("/Account/Login");
     });
 
 builder.Services.AddIdentity<UserEntity, IdentityRole>(o => 
@@ -35,7 +37,7 @@ builder.Services.AddIdentity<UserEntity, IdentityRole>(o =>
         o.Password.RequireLowercase = false;
         o.Password.RequireNonAlphanumeric = false;
         o.User.RequireUniqueEmail = true;
-        o.User.AllowedUserNameCharacters = builder.Configuration.GetValue<string>("AllowedUserNameCharacters");
+        o.User.AllowedUserNameCharacters = builder.Configuration.GetSection("AllowedUserNameCharacters").Get<string>();
     })
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
@@ -58,7 +60,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAll", policyBuilder => policyBuilder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
-
+ApplicationInstaller.Install(builder.Services, builder.Configuration);
 builder.Services.AddScoped<IDbRepository, DbRepository>();
 builder.Services.AddResponseCaching();
 builder.Services.AddControllersWithViews();

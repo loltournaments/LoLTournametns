@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoLTournaments.WebApi", "Lo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoLTournaments.Infrastructure", "LoLTournaments.Infrastructure\LoLTournaments.Infrastructure.csproj", "{A71EA597-BA7E-4AE7-9B5E-FDA8AA1E4360}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoLTournaments.Application", "LoLTournaments.Application\LoLTournaments.Application.csproj", "{F08C4C4D-4BD6-4041-A979-F0CAE17228E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{A71EA597-BA7E-4AE7-9B5E-FDA8AA1E4360}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A71EA597-BA7E-4AE7-9B5E-FDA8AA1E4360}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A71EA597-BA7E-4AE7-9B5E-FDA8AA1E4360}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F08C4C4D-4BD6-4041-A979-F0CAE17228E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F08C4C4D-4BD6-4041-A979-F0CAE17228E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F08C4C4D-4BD6-4041-A979-F0CAE17228E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F08C4C4D-4BD6-4041-A979-F0CAE17228E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

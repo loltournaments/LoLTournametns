@@ -1,0 +1,14 @@
+#nullable enable
+using System;
+
+namespace CCG.Berserk.Application.Exceptions
+{
+	public class HttpException : Exception
+	{
+		public int StatusCode { get; set; }
+
+		public HttpException(string message) : base(message)
+		{
+		}
+	}
+}
