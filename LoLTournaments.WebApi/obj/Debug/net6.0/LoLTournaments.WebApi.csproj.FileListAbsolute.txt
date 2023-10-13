@@ -115,7 +115,6 @@ D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0
 D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
 D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
-D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll
 D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
 D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
 D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
@@ -186,3 +185,17 @@ D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\obj\Debug\net6.0
 D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\obj\Debug\net6.0\LoLTournaments.WebApi.pdb
 D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\obj\Debug\net6.0\LoLTournaments.WebApi.genruntimeconfig.cache
 D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\obj\Debug\net6.0\ref\LoLTournaments.WebApi.dll
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\AutoMapper.dll
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\Microsoft.OpenApi.dll
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\LoLTournaments.Application.dll
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\LoLTournaments.Application.pdb
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\obj\Debug\net6.0\LoLTournaments.WebApi.MvcApplicationPartsAssemblyInfo.cs
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.UI.dll
+D:\UnityGitProjects\LoLTournaments-Server\LoLTournaments.WebApi\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Embedded.dll

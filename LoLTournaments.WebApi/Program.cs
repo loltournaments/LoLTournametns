@@ -2,11 +2,14 @@ using LoLTournaments.Application.Infrastructure;
 using LoLTournaments.Domain.Abstractions;
 using LoLTournaments.Domain.Entities;
 using LoLTournaments.Infrastructure.Presistence;
+using LoLTournaments.WebApi.Utilities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 // Di Setup
@@ -64,6 +67,15 @@ ApplicationInstaller.Install(builder.Services, builder.Configuration);
 builder.Services.AddScoped<IDbRepository, DbRepository>();
 builder.Services.AddResponseCaching();
 builder.Services.AddControllersWithViews();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+});
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = VersionInfo.SolutionName, Version = VersionInfo.APIVersion });
+});
+
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 // Di Setup
 
@@ -95,6 +107,13 @@ app.UseStaticFiles(new StaticFileOptions
     }
 });
 
+app.UseSwagger();
+app.UseSwaggerUI(o =>
+{
+    o.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    o.DocumentTitle = $"{VersionInfo.SolutionName}";
+    o.RoutePrefix = "swagger";
+});
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
