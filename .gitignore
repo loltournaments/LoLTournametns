@@ -66,3 +66,9 @@ node_modules/
 .env
 .idea/.idea.LoLTournaments-Server/
 LoLTournaments.Domain/.idea/
+LoLTournaments.Domain/bin/Debug/
+LoLTournaments.Domain/obj/Debug/
+LoLTournaments.Infrastructure/bin/Debug/
+LoLTournaments.WebApi/bin/Debug/
+LoLTournaments.WebApi/obj/Debug/
+LoLTournaments.Infrastructure/obj/Debug/

@@ -39,7 +39,7 @@ builder.Services.AddIdentity<UserEntity, IdentityRole>(o =>
         o.Password.RequiredLength = 4;
         o.Password.RequireLowercase = false;
         o.Password.RequireNonAlphanumeric = false;
-        o.User.RequireUniqueEmail = true;
+        o.User.RequireUniqueEmail = false;
         o.User.AllowedUserNameCharacters = builder.Configuration.GetSection("AllowedUserNameCharacters").Get<string>();
     })
     .AddEntityFrameworkStores<AppDbContext>()
@@ -117,6 +117,5 @@ app.UseSwaggerUI(o =>
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
-// app.UseEndpoints(endpoints => endpoints.MapControllers());
 app.MapGet("/", () => "Hello World!");
 app.Run();
