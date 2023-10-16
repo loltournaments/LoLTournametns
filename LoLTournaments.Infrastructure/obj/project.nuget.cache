@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7QnLErUCyTXKAl2bJ41Ly5ACjhb1Vt+q6axrnA7N/pfmxa4jgrLsRQ95MQ1gObdquk4op0aS5WYMvZXSSFOCrQ==",
+  "dgSpecHash": "fQe/EuDfGKe0ps5PX15bU+zVSHYPQPgJo2oZF76U+xOjwvzEE0SPdDRtHeLoGUOQUPD9RlZ/EMxfVoePfv1jVw==",
   "success": true,
   "projectFilePath": "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments.Infrastructure\\LoLTournaments.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -52,7 +52,7 @@
     "C:\\Users\\Mr. Cringe\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
     "C:\\Users\\Mr. Cringe\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\Mr. Cringe\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
-    "C:\\Users\\Mr. Cringe\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\Mr. Cringe\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\Mr. Cringe\\.nuget\\packages\\npgsql\\7.0.1\\npgsql.7.0.1.nupkg.sha512",
     "C:\\Users\\Mr. Cringe\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\7.0.1\\npgsql.entityframeworkcore.postgresql.7.0.1.nupkg.sha512",
     "C:\\Users\\Mr. Cringe\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql.design\\1.1.0\\npgsql.entityframeworkcore.postgresql.design.1.1.0.nupkg.sha512",

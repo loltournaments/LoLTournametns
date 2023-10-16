@@ -28,7 +28,17 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments.Domain\\LoLTournaments.Domain.csproj": {
+                "projectPath": "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments.Domain\\LoLTournaments.Domain.csproj"
+              },
+              "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments.Infrastructure\\LoLTournaments.Infrastructure.csproj": {
+                "projectPath": "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments.Infrastructure\\LoLTournaments.Infrastructure.csproj"
+              },
+              "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments.Shared\\LoLTournaments.Shared.csproj": {
+                "projectPath": "D:\\UnityGitProjects\\LoLTournaments-Server\\LoLTournaments.Shared\\LoLTournaments.Shared.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -50,6 +60,10 @@
               "version": "[12.0.1, )"
             },
             "Microsoft.Extensions.Configuration.Binder": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "System.ServiceModel.Primitives": {
               "target": "Package",
               "version": "[6.0.0, )"
             }
@@ -268,14 +282,14 @@
           "C:\\Users\\Mr. Cringe\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "netstandard2.1"
         ],
         "sources": {
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
             "projectReferences": {}
           }
         },
@@ -286,12 +300,12 @@
         }
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
           "dependencies": {
             "Newtonsoft.Json": {
               "target": "Package",
-              "version": "[13.0.3, )"
+              "version": "[13.0.1, )"
             }
           },
           "imports": [
@@ -306,7 +320,7 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.NETCore.App": {
+            "NETStandard.Library": {
               "privateAssets": "all"
             }
           },
@@ -361,6 +375,22 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "AutoMapper.Collection": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "AutoMapper.Collection.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.23, )"

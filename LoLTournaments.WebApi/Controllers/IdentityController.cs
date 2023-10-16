@@ -1,4 +1,5 @@
 ﻿using CCG.Berserk.Application.Exceptions;
+using LoLTournaments.Application.Abstractions;
 using LoLTournaments.Application.Services;
 using LoLTournaments.Domain.Abstractions;
 using LoLTournaments.Domain.Entities;
@@ -148,7 +149,8 @@ namespace LoLTournaments.WebApi.Controllers
             }
 		}
   
-		[HttpPost(nameof(ResetPassword)), AllowAnonymous]
+		[HttpPost(nameof(ResetPassword))]
+		[AllowAnonymous]
 		public async Task<IActionResult> ResetPassword() // TODO [FromBody, NotNull] ResetPasswordModel model
 		{
 			// if (string.IsNullOrWhiteSpace(model.Email))
@@ -172,6 +174,28 @@ namespace LoLTournaments.WebApi.Controllers
 			catch (ClientException e)
 			{
 				return BadRequest(e.Message);
+			}
+		}
+  
+		/// <summary>
+		/// Get current runtime app settings
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet(nameof(GetConfig))]
+		[AllowAnonymous]
+		public Task<IActionResult> GetConfig()
+		{
+			try
+			{
+				return Task.FromResult<IActionResult>(Ok(identityService.GetConfig()));
+			}
+			catch (ServerException e)
+			{
+				return Task.FromResult<IActionResult>(StatusCode(StatusCodes.Status500InternalServerError, e.Message));
+			}
+			catch (ClientException e)
+			{
+				return Task.FromResult<IActionResult>(BadRequest(e.Message));
 			}
 		}
 	}

@@ -1,4 +1,6 @@
-﻿namespace LoLTournaments.Shared.Utilities
+﻿using System;
+
+namespace LoLTournaments.Shared.Utilities
 {
 
     public static class ExtensionMethods

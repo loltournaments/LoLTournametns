@@ -10,6 +10,17 @@
       <PackageReference Include="AutoMapper" Version="12.0.1" />
       <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
+      <PackageReference Include="System.ServiceModel.Primitives" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\LoLTournaments.Domain\LoLTournaments.Domain.csproj" />
+      <ProjectReference Include="..\LoLTournaments.Infrastructure\LoLTournaments.Infrastructure.csproj" />
+      <ProjectReference Include="..\LoLTournaments.Shared\LoLTournaments.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Models" />
     </ItemGroup>
 
 </Project>

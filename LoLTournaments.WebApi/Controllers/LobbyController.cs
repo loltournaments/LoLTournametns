@@ -1,4 +1,5 @@
 ﻿using CCG.Berserk.Application.Exceptions;
+using LoLTournaments.Application.Abstractions;
 using LoLTournaments.Application.Services;
 using LoLTournaments.Domain.Abstractions;
 using LoLTournaments.WebApi.Utilities;

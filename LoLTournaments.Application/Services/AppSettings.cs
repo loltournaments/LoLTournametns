@@ -1,13 +1,10 @@
-﻿namespace LoLTournaments.Application.Services
+﻿using LoLTournaments.Application.Abstractions;
+using LoLTournaments.Shared.Models;
+
+namespace LoLTournaments.Application.Services
 {
 
-    public interface IAppSettings
-    {
-        string Version { get; }
-        bool IsMaintenanceMode { get; set; }
-    }
-    
-    public class AppSettings : IAppSettings
+    public class AppSettings : SharedConfig, IAppSettings
     {
         public string Version { get; set; }
         public bool IsMaintenanceMode { get; set; }

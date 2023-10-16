@@ -1,5 +1,4 @@
 using LoLTournaments.Application.Infrastructure;
-using LoLTournaments.Domain.Abstractions;
 using LoLTournaments.Domain.Entities;
 using LoLTournaments.Infrastructure.Presistence;
 using LoLTournaments.WebApi.Utilities;
@@ -63,8 +62,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAll", policyBuilder => policyBuilder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
-ApplicationInstaller.Install(builder.Services, builder.Configuration);
-builder.Services.AddScoped<IDbRepository, DbRepository>();
+ApplicationDi.Install(builder.Services, builder.Configuration);
 builder.Services.AddResponseCaching();
 builder.Services.AddControllersWithViews();
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
@@ -117,5 +115,6 @@ app.UseSwaggerUI(o =>
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapControllers();
 app.MapGet("/", () => "Hello World!");
 app.Run();
