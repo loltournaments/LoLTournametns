@@ -1,4 +1,5 @@
-﻿using CCG.Berserk.Application.Exceptions;
+﻿using System.Diagnostics.CodeAnalysis;
+using CCG.Berserk.Application.Exceptions;
 using LoLTournaments.Application.Abstractions;
 using LoLTournaments.Application.Services;
 using LoLTournaments.Domain.Abstractions;
@@ -40,20 +41,20 @@ namespace LoLTournaments.WebApi.Controllers
 		[HttpPost]
 		[Route(nameof(Register))]
 		[AllowAnonymous]
-		public async Task<IActionResult> Register()// [FromBody, NotNull] TODO
+		public async Task<IActionResult> Register([FromBody, NotNull] UserDto model)
 		{
-			// if (string.IsNullOrWhiteSpace(authModel.UserName))
-			// 	return BadRequest($"{nameof(authModel.UserName)} must be provided to perform sign-up");
-  	//
-			// if (string.IsNullOrWhiteSpace(authModel.Email))
-			// 	return BadRequest($"{nameof(authModel.Email)} must be provided to perform sign-up");
+			if (string.IsNullOrWhiteSpace(model.UserName))
+				return BadRequest($"{nameof(model.UserName)} must be provided to perform sign-in");
+  	
+			if (string.IsNullOrWhiteSpace(model.Password))
+				return BadRequest($"{nameof(model.Password)} must be provided to perform sign-in");
 			
 			if (!IsValidVersion("", appSettings.Version, out var versionResult)) // TODO version
 				return versionResult;
   
 			try
 			{
-				await identityService.Register();
+				await identityService.Register(model);
 				return Ok();
 			}
 			catch (ServerException e)
@@ -193,7 +194,7 @@ namespace LoLTournaments.WebApi.Controllers
 			{
 				return Task.FromResult<IActionResult>(StatusCode(StatusCodes.Status500InternalServerError, e.Message));
 			}
-			catch (ClientException e)
+			catch (Exception e)
 			{
 				return Task.FromResult<IActionResult>(BadRequest(e.Message));
 			}

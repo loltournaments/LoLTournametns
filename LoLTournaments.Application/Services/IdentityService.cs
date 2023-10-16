@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using LoLTournaments.Application.Abstractions;
+using LoLTournaments.Domain.Abstractions;
+using LoLTournaments.Domain.Entities;
 using LoLTournaments.Shared.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace LoLTournaments.Application.Services
 {
@@ -8,7 +11,7 @@ namespace LoLTournaments.Application.Services
     public interface IIdentityService
     {
         Task Login();
-        Task Register();
+        Task Register(UserDto model);
         Task Authenticate();
         Task ResetPassword();
         object GetConfig();
@@ -17,12 +20,19 @@ namespace LoLTournaments.Application.Services
     {
         private readonly IMapper mapper;
         private readonly IAppSettings appSettings;
+        private readonly IDbRepository dbRepository;
+        private readonly UserManager<UserEntity> userManager;
+
         public IdentityService(
             IMapper mapper,
-            IAppSettings appSettings)
+            IAppSettings appSettings,
+            IDbRepository dbRepository,
+            UserManager<UserEntity> userManager)
         {
             this.mapper = mapper;
             this.appSettings = appSettings;
+            this.dbRepository = dbRepository;
+            this.userManager = userManager;
         }
 
         public Task Login()
@@ -30,7 +40,7 @@ namespace LoLTournaments.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task Register()
+        public Task Register(UserDto model)
         {
             throw new NotImplementedException();
         }

@@ -49,7 +49,7 @@ namespace LoLTournaments.WebApi.Controllers
   
             try
             {
-                await identityService.Register();
+                // await identityService.Register();
                 return Ok();
             }
             catch (ServerException e)

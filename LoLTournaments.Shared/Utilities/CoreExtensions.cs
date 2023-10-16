@@ -15,7 +15,7 @@ namespace LoLTournaments.Shared.Utilities
             return new Member
             {
                 Id = user.Id,
-                NickName = user.Name ?? "Unknown",
+                NickName = user.UserName ?? "Unknown",
                 State = user.Permission.ToMemberState()
             };
         }
