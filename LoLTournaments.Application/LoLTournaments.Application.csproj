@@ -21,8 +21,4 @@
         <ProjectReference Include="..\LoLTournaments.Shared\LoLTournaments.Shared.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Models" />
-    </ItemGroup>
-
 </Project>
