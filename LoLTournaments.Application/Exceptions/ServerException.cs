@@ -1,4 +1,4 @@
-namespace CCG.Berserk.Application.Exceptions
+namespace LoLTournaments.Application.Exceptions
 {
     /**
 	 * If error occured because of server

@@ -1,7 +1,5 @@
 #nullable enable
-using System;
-
-namespace CCG.Berserk.Application.Exceptions
+namespace LoLTournaments.Application.Exceptions
 {
 	public class HttpException : Exception
 	{

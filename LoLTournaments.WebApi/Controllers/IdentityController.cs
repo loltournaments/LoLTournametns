@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using CCG.Berserk.Application.Exceptions;
-using LoLTournaments.Application.Abstractions;
+using LoLTournaments.Application.Exceptions;
 using LoLTournaments.Application.Services;
 using LoLTournaments.Shared.Models;
 using LoLTournaments.WebApi.Utilities;
@@ -12,16 +11,12 @@ namespace LoLTournaments.WebApi.Controllers
 	[Route("api/" + VersionInfo.APIVersion + "/[controller]")]
 	[ApiController]
 	[Authorize]
-	public class IdentityController : SharedController
+	public class IdentityController : ControllerBase
 	{
-		private readonly IAppSettings appSettings;
 		private readonly IIdentityService identityService;
 
-		public IdentityController(
-			IAppSettings appSettings,
-			IIdentityService identityService)
+		public IdentityController(IIdentityService identityService)
 		{
-			this.appSettings = appSettings;
 			this.identityService = identityService;
 		}
 
@@ -35,17 +30,14 @@ namespace LoLTournaments.WebApi.Controllers
 		[AllowAnonymous]
 		public async Task<IActionResult> Register([FromBody, NotNull] UserDto model)
 		{
-			if (!IsValidVersion(model.Version, appSettings.Version, out var versionResult))
-				return versionResult;
-			
-			if (string.IsNullOrWhiteSpace(model.UserName))
-				return BadRequest($"{nameof(model.UserName)} must be provided to perform sign-up");
-  	
-			if (string.IsNullOrWhiteSpace(model.Password))
-				return BadRequest($"{nameof(model.Password)} must be provided to perform sign-up");
-			
 			try
 			{
+				if (string.IsNullOrWhiteSpace(model.UserName))
+					return BadRequest($"{nameof(model.UserName)} must be provided to perform sign-up");
+  	
+				if (string.IsNullOrWhiteSpace(model.Password))
+					return BadRequest($"{nameof(model.Password)} must be provided to perform sign-up");
+				
 				return Ok(await identityService.Register(model));
 			}
 			catch (ServerException e)
@@ -78,17 +70,15 @@ namespace LoLTournaments.WebApi.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody, NotNull] UserDto model)
 		{
-			if (!IsValidVersion(model.Version, appSettings.Version, out var versionResult))
-	            return versionResult;
-            
-            if (string.IsNullOrWhiteSpace(model.UserName))
-                return BadRequest($"{nameof(model.UserName)} must be provided to perform sign-in");
-            
-            if (string.IsNullOrWhiteSpace(model.Password))
-                return BadRequest($"{nameof(model.Password)} must be provided to perform sign-in");
-
-            try
+			try
             {
+	            
+	            if (string.IsNullOrWhiteSpace(model.UserName))
+		            return BadRequest($"{nameof(model.UserName)} must be provided to perform sign-in");
+            
+	            if (string.IsNullOrWhiteSpace(model.Password))
+		            return BadRequest($"{nameof(model.Password)} must be provided to perform sign-in");
+	            
 	            return Ok(await identityService.Login(model));
             }
             catch (ServerException ex)
@@ -98,10 +88,6 @@ namespace LoLTournaments.WebApi.Controllers
 			catch (ForbiddenException ex)
             {
 	            return Forbid(ex.Message);
-            }
-            catch (ValidationException ex)
-            {
-	            return BadRequest(ex.Message);
             }
 			catch (Exception ex)
 			{
@@ -127,9 +113,9 @@ namespace LoLTournaments.WebApi.Controllers
 			{
 				return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
 			}
-			catch (ClientException e)
+			catch (Exception ex)
 			{
-				return BadRequest(e.Message);
+				return BadRequest(ex.Message);
 			}
 		}
   

@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
-using CCG.Berserk.Application.Exceptions;
 using LoLTournaments.Application.Abstractions;
+using LoLTournaments.Application.Exceptions;
 using LoLTournaments.Domain.Entities;
 using LoLTournaments.Shared.Abstractions;
 using LoLTournaments.Shared.Models;
@@ -45,6 +45,7 @@ namespace LoLTournaments.Application.Services
 
         public async Task<UserDto> Login(UserDto model)
         {
+            ValidateVersion(model.Version);
             var user = await userManager.FindByNameAsync(model.UserName);
 
             if (user == null)
@@ -62,6 +63,7 @@ namespace LoLTournaments.Application.Services
 
         public async Task<UserDto> Register(UserDto model)
         {
+            ValidateVersion(model.Version);
             var user = await userManager.FindByNameAsync(model.UserName);
 
             if (user != null)
@@ -81,13 +83,9 @@ namespace LoLTournaments.Application.Services
             return mapper.Map<UserDto>(user);
         }
 
-        public Task Authenticate()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<UserDto> ResetPassword(UserDto model)
         {
+            ValidateVersion(model.Version);
             var user = await userManager.FindByNameAsync(model.UserName);
 
             if (user == null)
@@ -114,6 +112,14 @@ namespace LoLTournaments.Application.Services
         public string GetTimeAbbrevation()
         {
             return appSettings.TimeAbbrevation;
+        }
+
+        private void ValidateVersion(string clientVersion)
+        {
+            if (clientVersion.ConvertVersion() >= appSettings.Version.ConvertVersion())
+                return;
+
+            throw new ValidationException($"Install the latest version : {appSettings.Version}");
         }
     }
 

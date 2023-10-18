@@ -1,4 +1,4 @@
-namespace CCG.Berserk.Application.Exceptions
+namespace LoLTournaments.Application.Exceptions
 {
 	public class ConflictException : HttpException
 	{
