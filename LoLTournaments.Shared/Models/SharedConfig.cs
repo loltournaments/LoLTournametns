@@ -24,7 +24,5 @@ namespace LoLTournaments.Shared.Models
         public double LobbyProcessTime { get; set; }
         public double LobbyAcceptsTime { get; set; }
         public double GameAcceptsTime { get; set; }
-        public DateTime RemoteTime => DateTime.Now;
-        public string RemoteTimeAbbreviation { get; set; }
     }
 }

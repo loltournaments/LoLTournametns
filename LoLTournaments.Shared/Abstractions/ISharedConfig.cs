@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LoLTournaments.Shared.Abstractions
+﻿namespace LoLTournaments.Shared.Abstractions
 {
 
     public interface ISharedConfig
@@ -23,8 +21,6 @@ namespace LoLTournaments.Shared.Abstractions
         double LobbyProcessTime { get; }
         double LobbyAcceptsTime { get; }
         double GameAcceptsTime { get; }
-        DateTime RemoteTime { get; }
-        string RemoteTimeAbbreviation { get; }
     }
 
 }

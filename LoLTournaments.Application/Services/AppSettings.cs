@@ -8,6 +8,7 @@ namespace LoLTournaments.Application.Services
     {
         public string Version { get; set; }
         public bool IsMaintenanceMode { get; set; }
+        public string TimeAbbrevation { get; set; }
     }
 
 }

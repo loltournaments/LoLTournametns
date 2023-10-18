@@ -7,6 +7,7 @@ namespace LoLTournaments.Application.Abstractions
     {
         string Version { get; }
         bool IsMaintenanceMode { get; set; }
+        string TimeAbbrevation { get; }
     }
 
 }

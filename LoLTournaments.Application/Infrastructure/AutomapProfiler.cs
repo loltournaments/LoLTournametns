@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LoLTournaments.Application.Services;
+using LoLTournaments.Domain.Entities;
 using LoLTournaments.Shared.Models;
 
 namespace LoLTournaments.Application.Infrastructure
@@ -10,6 +11,7 @@ namespace LoLTournaments.Application.Infrastructure
         public AppMappingProfile()
         {			
             CreateMap<AppSettings, SharedConfig>().ReverseMap();
+            CreateMap<UserEntity, UserDto>().ReverseMap();
         }
     }
 

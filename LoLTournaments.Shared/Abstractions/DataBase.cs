@@ -6,6 +6,7 @@ namespace LoLTournaments.Shared.Abstractions
     public abstract class DataBase : IIdentity
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Version { get; set; }
         
         public override string ToString()
         {
