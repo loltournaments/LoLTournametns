@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using LoLTournaments.Shared.Abstractions;
+using LoLTournaments.Shared.Common;
 
 namespace LoLTournaments.Shared.Models
 {

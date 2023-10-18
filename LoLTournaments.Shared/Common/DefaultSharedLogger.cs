@@ -1,4 +1,6 @@
-﻿namespace LoLTournaments.Shared.Abstractions
+﻿using LoLTournaments.Shared.Abstractions;
+
+namespace LoLTournaments.Shared.Common
 {
 
     public class DefaultSharedLogger
