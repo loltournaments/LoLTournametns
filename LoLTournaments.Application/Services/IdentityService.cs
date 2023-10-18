@@ -2,14 +2,12 @@
 using AutoMapper;
 using CCG.Berserk.Application.Exceptions;
 using LoLTournaments.Application.Abstractions;
-using LoLTournaments.Domain.Abstractions;
 using LoLTournaments.Domain.Entities;
 using LoLTournaments.Shared.Abstractions;
 using LoLTournaments.Shared.Models;
 using LoLTournaments.Shared.Utilities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace LoLTournaments.Application.Services
 {
@@ -28,7 +26,6 @@ namespace LoLTournaments.Application.Services
         private readonly IMapper mapper;
         private readonly ISharedTime sharedTime;
         private readonly IAppSettings appSettings;
-        private readonly IDbRepository dbRepository;
         private readonly UserManager<UserEntity> userManager;
         private readonly SignInManager<UserEntity> signInManager;
 
@@ -36,14 +33,12 @@ namespace LoLTournaments.Application.Services
             IMapper mapper,
             ISharedTime sharedTime,
             IAppSettings appSettings,
-            IDbRepository dbRepository,
             UserManager<UserEntity> userManager,
             SignInManager<UserEntity> signInManager)
         {
             this.mapper = mapper;
             this.sharedTime = sharedTime;
             this.appSettings = appSettings;
-            this.dbRepository = dbRepository;
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
