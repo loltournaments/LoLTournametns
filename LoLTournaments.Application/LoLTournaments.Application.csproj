@@ -21,4 +21,8 @@
         <ProjectReference Include="..\LoLTournaments.Shared\LoLTournaments.Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Lobby" />
+    </ItemGroup>
+
 </Project>

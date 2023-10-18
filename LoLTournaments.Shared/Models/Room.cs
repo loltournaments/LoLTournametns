@@ -10,13 +10,13 @@ namespace LoLTournaments.Shared.Models
         public int Order { get; set; }
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
-        public LobbyState State { get; set; }
-        public Timer Timer { get; set; }
+        public LobbyState State { get; set; } = LobbyState.Draft;
+        public Timer Timer { get; set; } = null;
         
         [JsonIgnore] public bool HasChanges { get; set; }
 
-        public List<ParamInfo> Info = new();
-        public List<string> Registred = new();
-        public List<string> Accepted = new();
+        public List<ParamInfo> Info  { get; set; } = new();
+        public List<string> Registred  { get; set; } = new();
+        public List<string> Accepted  { get; set; } = new();
     }
 }

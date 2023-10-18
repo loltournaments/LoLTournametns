@@ -167,4 +167,5 @@ namespace LoLTournaments.WebApi.Controllers
 			}
 		}
 	}
+
 }
