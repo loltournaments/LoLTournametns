@@ -21,23 +21,235 @@ namespace LoLTournaments.WebApi.Controllers
             this.lobbyService = lobbyService;
         }
 
-        /// <summary>
-        /// Creates new user if it doesnt exist.
-        /// </summary>
-        /// <response code="400">Wrong name</response>
-        /// <response code="409">User with same name already exist</response>
-        [HttpPost]
-        [Route(nameof(GetData))]
+        [HttpGet]
+        [Route(nameof(GetRooms))]
         [AllowAnonymous]
-        public async Task<IActionResult> GetData([FromBody, NotNull] string request)
+        public async Task<IActionResult> GetRooms()
         {
             try
             {
-                return Ok(await lobbyService.GetData(request));
+                return Ok(await lobbyService.GetRooms());
+            }
+            catch (ClientException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route(nameof(GetRoom))]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetRoom([FromBody, NotNull] RequestSessionData model)
+        {
+            try
+            {
+                return Ok(await lobbyService.GetRoom(model));
+            }
+            catch (ClientException ex)
+            {
                 return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route(nameof(GetRoomData))]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetRoomData([FromBody, NotNull] RequestSessionData model)
+        {
+            try
+            {
+                return Ok(await lobbyService.GetRoomData(model));
+            }
+            catch (ClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route(nameof(SetRoomData))]
+        [AllowAnonymous]
+        public async Task<IActionResult> SetRoomData([FromBody, NotNull] ReceiveSessionData model)
+        {
+            try
+            {
+                await lobbyService.SetRoomData(model);
+                return Ok();
+            }
+            catch (ClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route(nameof(RemoveRoom))]
+        [AllowAnonymous]
+        public async Task<IActionResult> RemoveRoom([FromBody, NotNull] RequestSessionData model)
+        {
+            try
+            {
+                await lobbyService.RemoveRoom(model);
+                return Ok();
+            }
+            catch (ClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route(nameof(UpdateRooms))]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateRooms([FromBody, NotNull] ReceiveSessionData model)
+        {
+            try
+            {
+                await lobbyService.UpdateRooms(model);
+                return Ok();
+            }
+            catch (ClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route(nameof(RemoveRegistration))]
+        [AllowAnonymous]
+        public async Task<IActionResult> RemoveRegistration([FromBody, NotNull] ReceiveSessionData model)
+        {
+            try
+            {
+                await lobbyService.RemoveRegistration(model);
+                return Ok();
+            }
+            catch (ClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route(nameof(UpdateRegistration))]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateRegistration([FromBody, NotNull] ReceiveSessionData model)
+        {
+            try
+            {
+                await lobbyService.UpdateRegistration(model);
+                return Ok();
+            }
+            catch (ClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route(nameof(RemoveAcception))]
+        [AllowAnonymous]
+        public async Task<IActionResult> RemoveAcception([FromBody, NotNull] ReceiveSessionData model)
+        {
+            try
+            {
+                await lobbyService.RemoveAcception(model);
+                return Ok();
+            }
+            catch (ClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route(nameof(UpdateAcception))]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateAcception([FromBody, NotNull] ReceiveSessionData model)
+        {
+            try
+            {
+                await lobbyService.UpdateAcception(model);
+                return Ok();
+            }
+            catch (ClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route(nameof(GetPresset))]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetPresset()
+        {
+            try
+            {
+                return Ok(new List<ReceiveSessionData>
+                {
+                    new ReceiveSessionData(new List<ParamInfo>{new(){Value = "value1"}, new(){Value = "value2"}})
+                        {PropertyName = "Info", SessionId = "1"},
+                    
+                    new ReceiveSessionData(new List<string>{"value1","value2"})
+                        {PropertyName = "Registered", SessionId = "1"},
+                    
+                    new ReceiveSessionData(new List<string>{"value1","value2"})
+                        {PropertyName = "Accepted", SessionId = "1"},
+                    
+                    new ReceiveSessionData("SessionName")
+                        {PropertyName = "Name", SessionId = "1"},
+                    
+                    new ReceiveSessionData(100)
+                        {PropertyName = "Order", SessionId = "1"},
+                });
+            }
+            catch (ClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
     }

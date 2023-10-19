@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>disable</Nullable>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -19,10 +19,6 @@
         <ProjectReference Include="..\LoLTournaments.Domain\LoLTournaments.Domain.csproj" />
         <ProjectReference Include="..\LoLTournaments.Infrastructure\LoLTournaments.Infrastructure.csproj" />
         <ProjectReference Include="..\LoLTournaments.Shared\LoLTournaments.Shared.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Lobby" />
     </ItemGroup>
 
 </Project>
