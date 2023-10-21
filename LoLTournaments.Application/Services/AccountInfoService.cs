@@ -31,13 +31,13 @@ namespace LoLTournaments.Application.Services
         
         public async Task<AccountInfo> GetInfo(string userName)
         {
-            var url = appSettings.StatsPath
-                .Replace("[region]", appSettings.Region)
-                .Replace("[name]", userName)
-                .Replace(" ", "%20");
-
             try
             {
+                var url = appSettings.StatsPath
+                    .Replace("[region]", appSettings.Region)
+                    .Replace("[name]", userName)
+                    .Replace(" ", "%20");
+                
                 using var client = new HttpClient();
                 using var response = await client.SendAsync(new HttpRequestMessage(HttpMethod.Get, url));
                 var jsonData = await response.Content.ReadAsStringAsync();

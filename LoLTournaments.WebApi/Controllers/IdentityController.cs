@@ -24,12 +24,7 @@ namespace LoLTournaments.WebApi.Controllers
             this.identityService = identityService;
             this.accountInfoService = accountInfoService;
         }
-
-        /// <summary>
-        /// Creates new user if it doesnt exist.
-        /// </summary>
-        /// <response code="400">Wrong name</response>
-        /// <response code="409">User with same name already exist</response>
+        
         [HttpPost]
         [Route(nameof(Register))]
         [AllowAnonymous]
@@ -58,10 +53,7 @@ namespace LoLTournaments.WebApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
-
-        /// <summary>
-        /// Login with UserName and Password.
-        /// </summary>
+        
         [HttpPost]
         [Route(nameof(Login))]
         [AllowAnonymous]
@@ -135,11 +127,7 @@ namespace LoLTournaments.WebApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
-
-        /// <summary>
-        /// Get current runtime app settings
-        /// </summary>
-        /// <returns></returns>
+        
         [HttpGet(nameof(GetConfig))]
         [AllowAnonymous]
         public Task<IActionResult> GetConfig()
@@ -158,10 +146,6 @@ namespace LoLTournaments.WebApi.Controllers
             }
         }
 
-        /// <summary>
-        /// Get current api time
-        /// </summary>
-        /// <returns></returns>
         [HttpGet(nameof(GetApiTime))]
         [AllowAnonymous]
         public Task<IActionResult> GetApiTime()
