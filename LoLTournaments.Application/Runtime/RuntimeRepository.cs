@@ -1,4 +1,4 @@
-﻿using LoLTournaments.Application.Abstractions;
+﻿using LoLTournaments.Domain.Abstractions;
 using LoLTournaments.Shared.Abstractions;
 using LoLTournaments.Shared.Utilities;
 

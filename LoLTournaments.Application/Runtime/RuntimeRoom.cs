@@ -2,7 +2,7 @@
 using LoLTournaments.Shared.Models;
 using Newtonsoft.Json;
 
-namespace LoLTournaments.Application.Models
+namespace LoLTournaments.Application.Runtime
 {
 
     public class RuntimeRoom : DataBase, IOrderable

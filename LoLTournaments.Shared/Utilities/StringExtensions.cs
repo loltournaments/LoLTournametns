@@ -15,7 +15,7 @@ namespace LoLTournaments.Shared.Utilities
                 : int.MinValue;
         }
         /// <summary>
-        /// Will format any public fields and their values into a string.
+        /// Will format any public Fields/Properties and their values into a string.
         /// </summary>
         public static string ReflectionFormat(this object source) 
         {

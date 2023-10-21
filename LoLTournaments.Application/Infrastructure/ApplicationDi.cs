@@ -1,6 +1,4 @@
-﻿using LoLTournaments.Application.Abstractions;
-using LoLTournaments.Application.Models;
-using LoLTournaments.Application.Runtime;
+﻿using LoLTournaments.Application.Runtime;
 using LoLTournaments.Application.Services;
 using LoLTournaments.Domain.Abstractions;
 using LoLTournaments.Infrastructure.Presistence;
@@ -21,7 +19,7 @@ namespace LoLTournaments.Application.Infrastructure
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<ILobbyService, LobbyService>();
             services.AddScoped<ISessionService, SessionService>();
-            services.AddScoped<IDbRepository, DbRepository>();
+            services.AddScoped<IDbRepository, DbRepository<AppDbContext>>();
             services.AddScoped<ISharedTime, SharedTime>();
             
             services.AddSingleton<IAppSettings>(appSettings);

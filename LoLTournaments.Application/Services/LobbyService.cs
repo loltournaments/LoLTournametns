@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using LoLTournaments.Application.Abstractions;
 using LoLTournaments.Application.Exceptions;
-using LoLTournaments.Application.Models;
+using LoLTournaments.Application.Runtime;
+using LoLTournaments.Domain.Abstractions;
 using LoLTournaments.Shared.Models;
 using LoLTournaments.Shared.Utilities;
 

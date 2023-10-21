@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using LoLTournaments.Application.Models;
+using LoLTournaments.Application.Runtime;
 using LoLTournaments.Application.Services;
 using LoLTournaments.Domain.Entities;
 using LoLTournaments.Shared.Models;

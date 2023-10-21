@@ -1,6 +1,6 @@
 ﻿using LoLTournaments.Shared.Abstractions;
 
-namespace LoLTournaments.Application.Models
+namespace LoLTournaments.Application.Runtime
 {
 
     public class RuntimeGroup : DataBase, IOrderable

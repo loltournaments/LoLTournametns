@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 namespace LoLTournaments.Infrastructure.Presistence
 {
 
-    public class DbRepository : IDbRepository
+    public class DbRepository<TContext> : IDbRepository where TContext : DbContext
     {
-        private readonly AppDbContext context;
+        private readonly TContext context;
 
-        public DbRepository(AppDbContext context)
+        public DbRepository(TContext context)
         {
             this.context = context;
         }

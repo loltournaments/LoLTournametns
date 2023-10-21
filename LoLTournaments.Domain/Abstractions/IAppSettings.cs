@@ -1,6 +1,6 @@
 using LoLTournaments.Shared.Abstractions;
 
-namespace LoLTournaments.Application.Abstractions
+namespace LoLTournaments.Domain.Abstractions
 {
 
     public interface IAppSettings : ISharedConfig
