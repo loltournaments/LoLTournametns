@@ -6,8 +6,8 @@ namespace LoLTournaments.Domain.Abstractions
     public interface IRuntimeRepository<TValue> where TValue : IIdentity
     {
         TValue Get(string key);
-        TValue[] Get(Func<TValue, bool> predicat);
-        TValue[] Get();
+        IEnumerable<TValue> Get(Func<TValue, bool> predicat);
+        IEnumerable<TValue> Get();
         void Add(TValue value);
         bool Replace(TValue value);
         bool Replace(IEnumerable<TValue> value);

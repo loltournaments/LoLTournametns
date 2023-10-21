@@ -20,6 +20,7 @@ namespace LoLTournaments.Application.Infrastructure
             CreateMap<RuntimeGame, Game>().ReverseMap();
             CreateMap<RuntimeMember, Member>().ReverseMap();
             CreateMap<RuntimeWinner, Winner>().ReverseMap();
+            CreateMap<RuntimeMember, RuntimeWinner>().ReverseMap();
             CreateMap<LeagueOfLegendsPlayerInfo, AccountInfo>().ReverseMap();
             CreateMap<Member, Winner>().ReverseMap();
         }

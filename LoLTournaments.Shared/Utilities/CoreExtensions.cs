@@ -141,18 +141,18 @@ namespace LoLTournaments.Shared.Utilities
             return enumarable.ToOrderedDictionary();
         }
 
-        public static void SortIfOrderable(this IList collection)
+        public static T SortIfOrderable<T>(this T collection) where T : IList
         {
             if (collection == null)
-                return;
+                return default;
 
             var listType = collection.GetType();
             if (listType.GenericTypeArguments.IsNullOrEmpty())
-                return;
+                return collection;
             
             var genericType = collection.GetType().GetGenericArguments()[0];
             if (!typeof(IOrderable).IsAssignableFrom(genericType)) 
-                return;
+                return collection;
                 
             var ordered = collection
                 .Cast<IOrderable>()
@@ -162,6 +162,8 @@ namespace LoLTournaments.Shared.Utilities
             collection.Clear();
             foreach (var orderable in ordered)
                 collection.Add(orderable);
+
+            return collection;
         }
     }
 }

@@ -13,6 +13,19 @@ namespace LoLTournaments.Application.Services
         Task<AccountInfo> GetInfo(string userName);
     }
 
+    public class LeagueOfLegendsPlayerInfo
+    {
+        [JsonProperty("puuid")] 
+        public string Id;
+        [JsonProperty("icon")] 
+        public string IconUrl;
+        public string Region;
+        public string Name;
+        public string Level;
+        [JsonProperty("solo-tier")] 
+        public string Tier;
+    }
+    
     public class AccountInfoService : IAccountInfoService
     {
         private readonly IMapper mapper;

@@ -1,4 +1,5 @@
 ﻿using System;
+using LoLTournaments.Shared.Common;
 using Newtonsoft.Json;
 
 namespace LoLTournaments.Shared.Models
@@ -22,20 +23,42 @@ namespace LoLTournaments.Shared.Models
             this.valueType = valueType;
         }
         
-        public object GetValue()
+        public object GetValue(Type customType = null)
         {
-            return valueType == typeof(string) ? value : JsonConvert.DeserializeObject(value, valueType);
+            customType ??= valueType;
+            return customType == typeof(string) ? value : JsonConvert.DeserializeObject(value, customType);
         }
 
         public T GetValue<T>()
         {
             if (valueType != typeof(string)) 
-                return (T)GetValue();
+                return JsonConvert.DeserializeObject<T>(value);
             
             if (value is T tValue)
                 return tValue;
 
             throw new InvalidCastException($"Can't cast [{valueType.Name}] to [{typeof(T).Name}]");
+        }
+
+        public bool TryGetValue<T>(out T result, bool suppreseThrow = true)
+        {
+            if (suppreseThrow)
+            {
+                try
+                {
+                    result = GetValue<T>();
+                    return result != null;
+                }
+                catch (Exception e)
+                {
+                    DefaultSharedLogger.Error(e);
+                    result = default;
+                    return false;
+                }
+            }
+            
+            result = GetValue<T>();
+            return result != null;
         }
 
         public T GetValue<T>(T _) => GetValue<T>();

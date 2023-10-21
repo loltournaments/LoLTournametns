@@ -19,12 +19,12 @@ namespace LoLTournaments.Application.Runtime
             return Storage.FirstOrDefault(x => x.Id == key);
         }
 
-        public TValue[] Get(Func<TValue, bool> predicat)
+        public IEnumerable<TValue> Get(Func<TValue, bool> predicat)
         {
             return Storage.Where(predicat).ToArray();
         }
 
-        public virtual TValue[] Get()
+        public virtual IEnumerable<TValue> Get()
         {
             return Storage.ToArray();
         }
