@@ -10,7 +10,7 @@ namespace LoLTournaments.Shared.Models
         public string WinnerId { get; set; }
         public WinnerReason WinnerReason { get; set; }
         
-        public Timer Timer { get; set; }
+        public SessionTimer Timer { get; set; }
         public List<string> Members = new();
     }
 }

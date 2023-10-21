@@ -151,11 +151,7 @@ namespace LoLTournaments.WebApi.Controllers
 		{
 			try
 			{
-				return Task.FromResult<IActionResult>(Ok(new ApiTime
-				{
-					Date = identityService.GetCurrentTime(),
-					Abbrevation = identityService.GetTimeAbbrevation()
-				}));
+				return Task.FromResult<IActionResult>(Ok(identityService.GetApiTime()));
 			}
 			catch (ServerException e)
 			{

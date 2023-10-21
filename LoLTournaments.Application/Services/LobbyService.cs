@@ -1,5 +1,7 @@
-﻿using LoLTournaments.Application.Abstractions;
+﻿using AutoMapper;
+using LoLTournaments.Application.Abstractions;
 using LoLTournaments.Application.Exceptions;
+using LoLTournaments.Application.Models;
 using LoLTournaments.Shared.Models;
 using LoLTournaments.Shared.Utilities;
 
@@ -22,23 +24,27 @@ namespace LoLTournaments.Application.Services
 
     public class LobbyService : ILobbyService
     {
-        private readonly IRuntimeRepository<Room> runtimeRepository;
+        private readonly IMapper mapper;
+        private readonly IRuntimeRepository<RuntimeRoom> runtimeRepository;
 
-        public LobbyService(IRuntimeRepository<Room> runtimeRepository)
+        public LobbyService(
+            IMapper mapper,
+            IRuntimeRepository<RuntimeRoom> runtimeRepository)
         {
+            this.mapper = mapper;
             this.runtimeRepository = runtimeRepository;
-            runtimeRepository.Add(new Room{Id = "1"});
-            runtimeRepository.Add(new Room{Id = "2"});
+            runtimeRepository.Add(new RuntimeRoom{Id = "1"});
+            runtimeRepository.Add(new RuntimeRoom{Id = "2"});
         }
 
         public Task<Room[]> GetRooms()
         {
-            return Task.FromResult(runtimeRepository.Get());
+            return Task.FromResult(mapper.Map<Room[]>(runtimeRepository.Get()));
         }
 
         public Task<Room> GetRoom(RequestSession model)
         {
-            return Task.FromResult(runtimeRepository.Get(model.SessionId));
+            return Task.FromResult(mapper.Map<Room>(runtimeRepository.Get(model.SessionId)));
         }
 
         public Task<object> GetRoomData(RequestSessionData model)
@@ -63,11 +69,26 @@ namespace LoLTournaments.Application.Services
 
             switch (model.PropertyName)
             {
-                case nameof(room.Accepted): room.Accepted = model.GetValue(room.Accepted); break;
-                case nameof(room.Info): room.Info = model.GetValue(room.Info); break;
+                case nameof(room.Accepted):
+                {
+                    room.Accepted.Clear();
+                    model.GetValue<IEnumerable<string>>().Foreach(room.Accepted.Add); 
+                    break;
+                }
+                case nameof(room.Info):
+                {
+                    room.Info.Clear();
+                    model.GetValue<IEnumerable<ParamInfo>>().Foreach(room.Info.Add); 
+                    break;
+                }
+                case nameof(room.Registred):
+                {
+                    room.Registred.Clear();
+                    model.GetValue<IEnumerable<string>>().Foreach(room.Registred.Add); 
+                    break;
+                }
                 case nameof(room.Name): room.Name = model.GetValue(room.Name); break;
                 case nameof(room.Order): room.Order = model.GetValue(room.Order); break;
-                case nameof(room.Registred): room.Registred = model.GetValue(room.Registred); break;
                 case nameof(room.State): room.State = model.GetValue(room.State); break;
                 case nameof(room.Timer): room.Timer = model.GetValue(room.Timer); break;
                 case nameof(room.HasChanges): room.HasChanges = model.GetValue(room.HasChanges); break;
@@ -91,7 +112,7 @@ namespace LoLTournaments.Application.Services
             if (model.GetValue<IEnumerable<Room>>() is not {} rooms)
                 throw new ClientException($"Can't update rooms, rooms is missing : {model}.");
 
-            runtimeRepository.Replace(rooms);
+            runtimeRepository.Replace(mapper.Map<IEnumerable<RuntimeRoom>>(rooms));
             return Task.CompletedTask;
         }
         
@@ -106,7 +127,7 @@ namespace LoLTournaments.Application.Services
                 throw new ClientException($"Can't UnRegistration, missing members.\n" +
                                           $"Request : {model}");
 
-            room.Registred.RemoveAll(memberId => memberIds.Contains(memberId));
+            memberIds.Foreach(id => room.Registred.Remove(id));
             return Task.CompletedTask;
         }
         
@@ -120,8 +141,13 @@ namespace LoLTournaments.Application.Services
             if (model.GetValue<IEnumerable<string>>() is not {} memberIds)
                 throw new ClientException($"Can't update registration, missing members.\n" +
                                           $"Request : {model}");
-        
-            room.Registred.AddRange(memberIds.Except(room.Registred));
+            
+            foreach (var memberId in memberIds)
+            {
+                if (!room.Registred.Contains(memberId))
+                    room.Registred.Add(memberId);
+            }
+            
             return Task.CompletedTask;
         }
         
@@ -135,8 +161,8 @@ namespace LoLTournaments.Application.Services
             if (model.GetValue<IEnumerable<string>>() is not {} memberIds)
                 throw new ClientException($"Can't remove acception, missing members.\n" +
                                           $"Request : {model}");
-
-            room.Accepted.RemoveAll(memberId => memberIds.Contains(memberId));
+            
+            memberIds.Foreach(id => room.Accepted.Remove(id));
             return Task.CompletedTask;
         }
         
@@ -150,8 +176,13 @@ namespace LoLTournaments.Application.Services
             if (model.GetValue<IEnumerable<string>>() is not {} memberIds)
                 throw new ClientException($"Can't update acception, missing members.\n" +
                                           $"Request : {model}");
-        
-            room.Accepted.AddRange(memberIds.Except(room.Registred));
+            
+            foreach (var memberId in memberIds)
+            {
+                if (!room.Accepted.Contains(memberId))
+                    room.Accepted.Add(memberId);
+            }
+            
             return Task.CompletedTask;
         }
     }

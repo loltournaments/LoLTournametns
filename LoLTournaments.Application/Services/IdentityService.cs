@@ -18,8 +18,7 @@ namespace LoLTournaments.Application.Services
         Task<UserDto> Register(UserDto model);
         Task<UserDto> ResetPassword(UserDto model);
         object GetConfig();
-        DateTime GetCurrentTime();
-        string GetTimeAbbrevation();
+        ApiTime GetApiTime();
     }
     public class IdentityService : IIdentityService
     {
@@ -104,16 +103,15 @@ namespace LoLTournaments.Application.Services
             return mapper.Map<SharedConfig>(appSettings);
         }
 
-        public DateTime GetCurrentTime()
+        public ApiTime GetApiTime()
         {
-            return sharedTime.Current;
+            return new ApiTime
+            {
+                Date = sharedTime.Current,
+                Abbrevation = appSettings.TimeAbbrevation
+            };
         }
-
-        public string GetTimeAbbrevation()
-        {
-            return appSettings.TimeAbbrevation;
-        }
-
+        
         private void ValidateVersion(string clientVersion)
         {
             if (clientVersion.ConvertVersion() >= appSettings.Version.ConvertVersion())

@@ -7,7 +7,7 @@ namespace LoLTournaments.Shared.Models
     [Flags,JsonConverter(typeof(StringEnumConverter))]
     public enum LobbyState
     {
-        Draft = 4,       
+        Draft = 0,       
         Registration = 8,
         Accepts = 16,
         Processing = 32,  

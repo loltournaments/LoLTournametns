@@ -1,11 +1,11 @@
 ﻿using LoLTournaments.Application.Abstractions;
-using LoLTournaments.Application.Repositories;
+using LoLTournaments.Application.Models;
+using LoLTournaments.Application.Runtime;
 using LoLTournaments.Application.Services;
 using LoLTournaments.Domain.Abstractions;
 using LoLTournaments.Infrastructure.Presistence;
 using LoLTournaments.Shared.Abstractions;
 using LoLTournaments.Shared.Common;
-using LoLTournaments.Shared.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,15 +18,16 @@ namespace LoLTournaments.Application.Infrastructure
         {
             var appSettings = configuration.GetSection("AppSettings").Get<AppSettings>();
             services.AddAutoMapper(typeof(AppMappingProfile));
-            services.AddTransient<IIdentityService, IdentityService>();
-            services.AddTransient<ILobbyService, LobbyService>();
-            services.AddTransient<ISessionService, SessionService>();
-            services.AddSingleton<IAppSettings>(appSettings);  
-            services.AddSingleton<ISharedTime, SharedTime>();  
-            services.AddSingleton<ISharedConfig>(appSettings);  
-            services.AddSingleton<IRuntimeRepository<Room>, BaseRuntimeRepository<Room>>();  
-            services.AddSingleton<IRuntimeRepository<Session>, BaseRuntimeRepository<Session>>();  
+            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<ILobbyService, LobbyService>();
+            services.AddScoped<ISessionService, SessionService>();
             services.AddScoped<IDbRepository, DbRepository>();
+            services.AddScoped<ISharedTime, SharedTime>();
+            
+            services.AddSingleton<IAppSettings>(appSettings);
+            services.AddSingleton<ISharedConfig>(appSettings);  
+            services.AddSingleton<IRuntimeRepository<RuntimeRoom>, RuntimeRepository<RuntimeRoom>>();  
+            services.AddSingleton<IRuntimeRepository<RuntimeSession>, RuntimeRepository<RuntimeSession>>();
         }
     }
 

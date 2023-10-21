@@ -2,14 +2,14 @@
 using LoLTournaments.Shared.Abstractions;
 using LoLTournaments.Shared.Utilities;
 
-namespace LoLTournaments.Application.Repositories
+namespace LoLTournaments.Application.Runtime
 {
 
-    public class BaseRuntimeRepository<TValue> : IRuntimeRepository<TValue> where TValue : IIdentity
+    public class RuntimeRepository<TValue> : IRuntimeRepository<TValue> where TValue : IIdentity
     {
         protected readonly SynchronizedCollection<TValue> Storage;
 
-        public BaseRuntimeRepository()
+        public RuntimeRepository()
         {
             Storage = new SynchronizedCollection<TValue>();
         }

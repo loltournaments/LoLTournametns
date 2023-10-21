@@ -10,8 +10,8 @@ namespace LoLTournaments.Shared.Models
         public int Order { get; set; }
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
-        public LobbyState State { get; set; } = LobbyState.Draft;
-        public Timer Timer { get; set; } = null;
+        public LobbyState State { get; set; }
+        public SessionTimer Timer { get; set; }
         
         [JsonIgnore] public bool HasChanges { get; set; }
 
