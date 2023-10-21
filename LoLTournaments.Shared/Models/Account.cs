@@ -4,7 +4,7 @@ using LoLTournaments.Shared.Abstractions;
 namespace LoLTournaments.Shared.Models
 {
     [Serializable]
-    public class UserDto : DataBase
+    public class Account : DataBase
     {
         public string UserName { get; set; }
         public string Password { get; set; }

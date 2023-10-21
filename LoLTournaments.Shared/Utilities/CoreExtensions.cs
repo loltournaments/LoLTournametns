@@ -11,7 +11,7 @@ namespace LoLTournaments.Shared.Utilities
 {
     public static class CoreExtensions
     {
-        public static Member ToMember(this UserDto user)
+        public static Member ToMember(this Account user)
         {
             return new Member
             {

@@ -3,8 +3,7 @@
 
     public interface ISharedConfig
     {
-        string IconsPath { get; }
-        string StatsPath { get; }
+        string Region { get; }
         string GroupeTags { get; }
         int MaxTourInGroup { get; }
         int MaxGameInGroup { get; }

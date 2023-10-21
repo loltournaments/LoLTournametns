@@ -19,6 +19,7 @@ namespace LoLTournaments.Application.Infrastructure
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<ILobbyService, LobbyService>();
             services.AddScoped<ISessionService, SessionService>();
+            services.AddScoped<IAccountInfoService, AccountInfoService>();
             services.AddScoped<IDbRepository, DbRepository<AppDbContext>>();
             services.AddScoped<ISharedTime, SharedTime>();
             

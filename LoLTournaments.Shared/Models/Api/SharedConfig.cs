@@ -6,8 +6,7 @@ namespace LoLTournaments.Shared.Models
     [Serializable]
     public class SharedConfig : ISharedConfig
     {
-        public string IconsPath { get; set; }
-        public string StatsPath { get; set; }
+        public string Region { get; set; }
         public string GroupeTags { get; set; }
         public int MaxTourInGroup { get; set; }
         public int MaxGameInGroup { get; set; }

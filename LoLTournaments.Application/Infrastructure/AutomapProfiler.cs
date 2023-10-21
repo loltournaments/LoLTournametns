@@ -10,9 +10,9 @@ namespace LoLTournaments.Application.Infrastructure
     public class AppMappingProfile : Profile
     {
         public AppMappingProfile()
-        {			
+        {
             CreateMap<AppSettings, SharedConfig>().ReverseMap();
-            CreateMap<UserEntity, UserDto>().ReverseMap();
+            CreateMap<UserEntity, Account>().ReverseMap();
             CreateMap<RuntimeRoom, Room>().ReverseMap();
             CreateMap<RuntimeSession, Session>().ReverseMap();
             CreateMap<RuntimeStage, Stage>().ReverseMap();
@@ -20,6 +20,7 @@ namespace LoLTournaments.Application.Infrastructure
             CreateMap<RuntimeGame, Game>().ReverseMap();
             CreateMap<RuntimeMember, Member>().ReverseMap();
             CreateMap<RuntimeWinner, Winner>().ReverseMap();
+            CreateMap<LeagueOfLegendsPlayerInfo, AccountInfo>().ReverseMap();
             CreateMap<Member, Winner>().ReverseMap();
         }
     }
