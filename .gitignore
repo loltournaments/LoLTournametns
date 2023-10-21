@@ -76,3 +76,13 @@ LoLTournaments.Application/bin/Debug/
 LoLTournaments.Shared/bin/Debug/
 LoLTournaments.Shared/obj/Debug/
 LoLTournaments.Application/obj/Debug/
+LoLTournaments.Application/bin
+LoLTournaments.Application/obj
+LoLTournaments.Domain/bin
+LoLTournaments.Domain/obj
+LoLTournaments.Infrastructure/bin
+LoLTournaments.Infrastructure/obj
+LoLTournaments.Shared/bin
+LoLTournaments.Shared/obj
+LoLTournaments.WebApi/bin
+LoLTournaments.WebApi/obj
