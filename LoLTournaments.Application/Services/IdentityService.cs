@@ -46,26 +46,34 @@ namespace LoLTournaments.Application.Services
         public async Task<Account> Login(Account model)
         {
             ValidateVersion(model.Version);
-            var userResult = await GetUserByName(model.UserName);
-
-            if (!userResult || userResult.Value == null)
-                return await RegisterInternal(mapper.Map<UserEntity>(model), model.Password);
-
-            if (!await userManager.CheckPasswordAsync(userResult.Value, model.Password))
+            var user = await userManager.FindByNameAsync(model.UserName);
+            
+            if (appSettings.IsMaintenanceMode && !user.Permission.HasAllFlags(Permissions.Manager))
+                throw new ForbiddenException(
+                    $"We are updating app servers to provide you with the best experience possible.");
+            
+            if (user == null || !await userManager.CheckPasswordAsync(user, model.Password))
                 throw new ValidationException($"Invalid Credentials");
 
-            if (appSettings.IsMaintenanceMode && !userResult.Value.Permission.HasAllFlags(Permissions.Manager))
-                throw new ValidationException(
-                    $"We are updating app servers to provide you with the best experience possible.");
-
-            await signInManager.SignInAsync(userResult.Value, new AuthenticationProperties {IsPersistent = true});
-            return mapper.Map<Account>(userResult.Value);
+            await signInManager.SignInAsync(user, new AuthenticationProperties {IsPersistent = true});
+            return mapper.Map<Account>(user);
         }
 
         public async Task<Account> Register(Account model)
         {
             ValidateVersion(model.Version);
-            return await RegisterInternal(mapper.Map<UserEntity>(model), model.Password);
+            var user = mapper.Map<UserEntity>(model);
+            var result = await userManager.CreateAsync(user, model.Password);
+            if (result.Errors.Any())
+                throw new Exception($"Registration failed : {string.Join(',', result.Errors.Select(x => x.Description))}");
+
+            await userManager.AddClaimsAsync(user, new List<Claim>
+            {
+                new(ClaimTypes.NameIdentifier, user.UserName),
+                new(ClaimTypes.Role, "Player")
+            });
+
+            return mapper.Map<Account>(user);
         }
 
         public async Task<Account> ResetPassword(Account model)
@@ -97,30 +105,6 @@ namespace LoLTournaments.Application.Services
                 Date = sharedTime.Current,
                 Abbrevation = appSettings.TimeAbbrevation
             };
-        }
-
-        private async Task<Account> RegisterInternal(UserEntity user, string password)
-        {
-            var result = await userManager.CreateAsync(user, password);
-            if (result.Errors.Any())
-                throw new ValidationException(
-                    $"Registration error with messages: {string.Join(',', result.Errors.Select(x => x.Description))}");
-
-            await userManager.AddClaimsAsync(user, new List<Claim>
-            {
-                new(ClaimTypes.NameIdentifier, user.UserName),
-                new(ClaimTypes.Role, "Player")
-            });
-
-            return mapper.Map<Account>(user);
-        }
-
-        private async Task<Result<UserEntity>> GetUserByName(string userName)
-        {
-            if (string.IsNullOrWhiteSpace(userName))
-                return Result.Cancelled($"User with name : {userName} doesn't exist.");
-
-            return await userManager.FindByNameAsync(userName);
         }
 
         private void ValidateVersion(string clientVersion)
