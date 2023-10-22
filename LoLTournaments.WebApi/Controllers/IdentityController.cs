@@ -48,6 +48,10 @@ namespace LoLTournaments.WebApi.Controllers
             {
                 return BadRequest(e.Message);
             }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);

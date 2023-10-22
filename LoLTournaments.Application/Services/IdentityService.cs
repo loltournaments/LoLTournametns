@@ -62,6 +62,7 @@ namespace LoLTournaments.Application.Services
         public async Task<Account> Register(Account model)
         {
             ValidateVersion(model.Version);
+            model.Permission = Permissions.Participant;
             var user = mapper.Map<UserEntity>(model);
             var result = await userManager.CreateAsync(user, model.Password);
             if (result.Errors.Any())
