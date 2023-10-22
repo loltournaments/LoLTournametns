@@ -24,7 +24,7 @@ namespace LoLTournaments.WebApi.Controllers
             this.identityService = identityService;
             this.accountInfoService = accountInfoService;
         }
-        
+
         [HttpPost]
         [Route(nameof(Register))]
         [AllowAnonymous]
@@ -40,24 +40,12 @@ namespace LoLTournaments.WebApi.Controllers
 
                 return Ok(await identityService.Register(model));
             }
-            catch (ForbiddenException e)
-            {
-                return Forbid(e.Message);
-            }
-            catch (ClientException e)
-            {
-                return BadRequest(e.Message);
-            }
-            catch (ValidationException e)
-            {
-                return BadRequest(e.Message);
-            }
             catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+                return HandleException(e);
             }
         }
-        
+
         [HttpPost]
         [Route(nameof(Login))]
         [AllowAnonymous]
@@ -73,17 +61,9 @@ namespace LoLTournaments.WebApi.Controllers
 
                 return Ok(await identityService.Login(model));
             }
-            catch (ForbiddenException e)
-            {
-                return Forbid(e.Message);
-            }
-            catch (ClientException e)
-            {
-                return BadRequest(e.Message);
-            }
             catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+                return HandleException(e);
             }
         }
 
@@ -98,16 +78,12 @@ namespace LoLTournaments.WebApi.Controllers
 
                 if (string.IsNullOrWhiteSpace(model.Password))
                     throw new ClientException($"{nameof(model.Password)} must be provided to reset password");
-                
+
                 return Ok(await identityService.ResetPassword(model));
-            }
-            catch (ClientException e)
-            {
-                return BadRequest(e.Message);
             }
             catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+                return HandleException(e);
             }
         }
 
@@ -122,16 +98,12 @@ namespace LoLTournaments.WebApi.Controllers
 
                 return Ok(await accountInfoService.GetInfo(model.UserName));
             }
-            catch (ClientException e)
-            {
-                return BadRequest(e.Message);
-            }
             catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+                return HandleException(e);
             }
         }
-        
+
         [HttpGet(nameof(GetConfig))]
         [AllowAnonymous]
         public Task<IActionResult> GetConfig()
@@ -140,13 +112,9 @@ namespace LoLTournaments.WebApi.Controllers
             {
                 return Task.FromResult<IActionResult>(Ok(identityService.GetConfig()));
             }
-            catch (ClientException e)
-            {
-                return Task.FromResult<IActionResult>(BadRequest(e.Message));
-            }
             catch (Exception e)
             {
-                return Task.FromResult<IActionResult>(StatusCode(StatusCodes.Status500InternalServerError, e.Message));
+                return Task.FromResult(HandleException(e));
             }
         }
 
@@ -158,14 +126,21 @@ namespace LoLTournaments.WebApi.Controllers
             {
                 return Task.FromResult<IActionResult>(Ok(identityService.GetApiTime()));
             }
-            catch (ClientException e)
-            {
-                return Task.FromResult<IActionResult>(BadRequest(e.Message));
-            }
             catch (Exception e)
             {
-                return Task.FromResult<IActionResult>(StatusCode(StatusCodes.Status500InternalServerError, e.Message));
+                return Task.FromResult(HandleException(e));
             }
+        }
+
+        private IActionResult HandleException(Exception exception)
+        {
+            return exception switch
+            {
+                ForbiddenException => Forbid(exception.Message),
+                ClientException => BadRequest(exception.Message),
+                ValidationException => BadRequest(exception.Message),
+                _ => BadRequest(StatusCode(StatusCodes.Status500InternalServerError, exception.Message)),
+            };
         }
     }
 

@@ -66,7 +66,7 @@ namespace LoLTournaments.Application.Services
             var user = mapper.Map<UserEntity>(model);
             var result = await userManager.CreateAsync(user, model.Password);
             if (result.Errors.Any())
-                throw new Exception($"Registration failed : {string.Join(',', result.Errors.Select(x => x.Description))}");
+                throw new ServerException($"Registration failed : {string.Join(',', result.Errors.Select(x => x.Description))}");
 
             await userManager.AddClaimsAsync(user, new List<Claim>
             {
