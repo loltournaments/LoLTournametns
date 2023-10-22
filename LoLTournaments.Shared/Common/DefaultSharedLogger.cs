@@ -10,6 +10,11 @@ namespace LoLTournaments.Shared.Common
         {
             serviceLogger = logger;
         }
+        
+        public static void Initialize(ISharedLogger logger)
+        {
+            serviceLogger = logger;
+        }
 
         public static void Error(object value)
         {

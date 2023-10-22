@@ -20,11 +20,13 @@ namespace LoLTournaments.Application.Infrastructure
             services.AddScoped<ILobbyService, LobbyService>();
             services.AddScoped<ISessionService, SessionService>();
             services.AddScoped<IAccountInfoService, AccountInfoService>();
+            services.AddScoped<IFakeAccountService, FakeAccountService>();
             services.AddScoped<IDbRepository, DbRepository<AppDbContext>>();
             services.AddScoped<ISharedTime, SharedTime>();
             
             services.AddSingleton<IAppSettings>(appSettings);
             services.AddSingleton<ISharedConfig>(appSettings);  
+            services.AddSingleton<ISharedLogger, AppLoggerService>();
             services.AddSingleton<IRuntimeRepository<RuntimeRoom>, RuntimeRepository<RuntimeRoom>>();  
             services.AddSingleton<IRuntimeRepository<RuntimeSession>, RuntimeRepository<RuntimeSession>>();
         }

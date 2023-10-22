@@ -16,13 +16,16 @@ namespace LoLTournaments.WebApi.Controllers
     {
         private readonly IIdentityService identityService;
         private readonly IAccountInfoService accountInfoService;
+        private readonly IFakeAccountService fakeAccountService;
 
         public IdentityController(
             IIdentityService identityService,
-            IAccountInfoService accountInfoService)
+            IAccountInfoService accountInfoService,
+            IFakeAccountService fakeAccountService)
         {
             this.identityService = identityService;
             this.accountInfoService = accountInfoService;
+            this.fakeAccountService = fakeAccountService;
         }
 
         [HttpPost]
@@ -104,6 +107,66 @@ namespace LoLTournaments.WebApi.Controllers
             }
         }
 
+        [HttpGet(nameof(GetAccounts))]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAccounts()
+        {
+            try
+            {
+                return Ok(await identityService.GetAccounts());
+            }
+            catch (Exception e)
+            {
+                return HandleException(e);
+            }
+        }
+
+        [HttpPost(nameof(PostAccountTutorial))]
+        [AllowAnonymous]
+        public async Task<IActionResult> PostAccountTutorial([FromBody, NotNull] Account model)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(model.UserName))
+                    throw new ClientException($"{nameof(model.UserName)} must be provided to perform sign-in");
+
+                await identityService.SetAccountTutorial(model);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return HandleException(e);
+            }
+        }
+
+        [HttpGet(nameof(GenerateFakeAccounts))]
+        [AllowAnonymous]
+        public async Task<IActionResult> GenerateFakeAccounts()
+        {
+            try
+            {
+                return Ok(await fakeAccountService.GenerateAsync());
+            }
+            catch (Exception e)
+            {
+                return HandleException(e);
+            }
+        }
+
+        [HttpGet(nameof(GetBotAccount))]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetBotAccount()
+        {
+            try
+            {
+                return Ok(await fakeAccountService.AddBotAccount());
+            }
+            catch (Exception e)
+            {
+                return HandleException(e);
+            }
+        }
+
         [HttpGet(nameof(GetConfig))]
         [AllowAnonymous]
         public Task<IActionResult> GetConfig()
@@ -139,7 +202,7 @@ namespace LoLTournaments.WebApi.Controllers
                 ForbiddenException => Forbid(exception.Message),
                 ClientException => BadRequest(exception.Message),
                 ValidationException => BadRequest(exception.Message),
-                _ => BadRequest(StatusCode(StatusCodes.Status500InternalServerError, exception.Message)),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, exception.Message),
             };
         }
     }

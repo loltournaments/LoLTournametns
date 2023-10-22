@@ -1,6 +1,8 @@
 using LoLTournaments.Application.Infrastructure;
 using LoLTournaments.Domain.Entities;
 using LoLTournaments.Infrastructure.Presistence;
+using LoLTournaments.Shared.Abstractions;
+using LoLTournaments.Shared.Common;
 using LoLTournaments.WebApi.Utilities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
@@ -93,7 +95,7 @@ provider.Mappings.Add(".wasm", "application/wasm");
 provider.Mappings.Add(".unityweb", "application/octet-stream");
 provider.Mappings.Add(".data", "application/octet-stream");
 provider.Mappings.Add(".js", "application/javascript");
-
+DefaultSharedLogger.Initialize(app.Services.GetRequiredService<ISharedLogger>());
 app.UseStaticFiles(new StaticFileOptions
 {
     ContentTypeProvider = provider,

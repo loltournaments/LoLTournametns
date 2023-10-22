@@ -8,6 +8,8 @@ namespace LoLTournaments.Domain.Abstractions
         string Version { get; }
         string IconsPath { get; }
         string StatsPath { get; }
+        string FakeAccountPath { get; }
+        int FakeAccountCount { get; }
         bool IsMaintenanceMode { get; set; }
         string TimeAbbrevation { get; }
     }

@@ -8,6 +8,7 @@ using LoLTournaments.Shared.Models;
 using LoLTournaments.Shared.Utilities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace LoLTournaments.Application.Services
 {
@@ -17,6 +18,8 @@ namespace LoLTournaments.Application.Services
         Task<Account> Login(Account user);
         Task<Account> Register(Account model);
         Task<Account> ResetPassword(Account model);
+        Task<Account[]> GetAccounts();
+        Task SetAccountTutorial(Account model);
         object GetConfig();
         ApiTime GetApiTime();
     }
@@ -26,6 +29,7 @@ namespace LoLTournaments.Application.Services
         private readonly IMapper mapper;
         private readonly ISharedTime sharedTime;
         private readonly IAppSettings appSettings;
+        private readonly IDbRepository dbRepository;
         private readonly UserManager<UserEntity> userManager;
         private readonly SignInManager<UserEntity> signInManager;
 
@@ -33,12 +37,14 @@ namespace LoLTournaments.Application.Services
             IMapper mapper,
             ISharedTime sharedTime,
             IAppSettings appSettings,
+            IDbRepository dbRepository,
             UserManager<UserEntity> userManager,
             SignInManager<UserEntity> signInManager)
         {
             this.mapper = mapper;
             this.sharedTime = sharedTime;
             this.appSettings = appSettings;
+            this.dbRepository = dbRepository;
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
@@ -92,6 +98,18 @@ namespace LoLTournaments.Application.Services
                     $"Reset password error with messages: {string.Join('\n', result.Errors.Select(x => x.Description))}");
 
             return mapper.Map<Account>(user);
+        }
+
+        public async Task<Account[]> GetAccounts()
+        {
+            return mapper.Map<Account[]>(await dbRepository.Get<UserEntity>().ToArrayAsync());
+        }
+
+        public async Task SetAccountTutorial(Account model)
+        {
+            var user = await userManager.FindByNameAsync(model.UserName);
+            user.Tutorial = model.Tutorial;
+            await dbRepository.SaveChangesAsync();
         }
 
         public object GetConfig()
