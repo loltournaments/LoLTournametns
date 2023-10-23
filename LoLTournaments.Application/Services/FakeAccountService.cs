@@ -5,7 +5,6 @@ using LoLTournaments.Domain.Abstractions;
 using LoLTournaments.Domain.Entities;
 using LoLTournaments.Shared.Common;
 using LoLTournaments.Shared.Models;
-using LoLTournaments.Shared.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -26,13 +25,14 @@ namespace LoLTournaments.Application.Services
 
     public class FakeAccountService : IFakeAccountService
     {
+        private const string DefaultPassword = "1q2w";
+        private const string DefaultRole = "FakePlayer";
+        private const Permissions DefaultPermissions = Permissions.Test;
+        
         private readonly IMapper mapper;
         private readonly IAppSettings appSettings;
         private readonly IDbRepository dbRepository;
         private readonly UserManager<UserEntity> userManager;
-        private const string DefaultPassword = "1q2w";
-        private const Permissions DefaultPermissions = Permissions.Test;
-        private const string DefaultRole = "FakePlayer";
 
         public FakeAccountService(
             IMapper mapper,

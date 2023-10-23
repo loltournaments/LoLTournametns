@@ -10,9 +10,9 @@ namespace LoLTournaments.Application.Services
 
     public interface ILobbyService
     {
-        Task<List<Room>> GetRooms();
-        Task<Room> GetRoom(RequestSession model);
-        Task<object> GetRoomData(RequestSessionData model);
+        Task<dynamic> GetRooms();
+        Task<dynamic> GetRoom(RequestSession model);
+        Task<dynamic> GetRoomData(RequestSessionData model);
         Task SetRoomData(ReceiveSessionData model);
         Task RemoveRoom(RequestSession model);
         Task UpdateRooms(ReceiveSessionData model);
@@ -37,28 +37,40 @@ namespace LoLTournaments.Application.Services
             runtimeRepository.Add(new RuntimeRoom{Id = "2"});
         }
 
-        public Task<List<Room>> GetRooms()
+        public Task<dynamic> GetRooms()
         {
-            return Task.FromResult(mapper.Map<List<Room>>(runtimeRepository.Get()).SortIfOrderable());
+            return Task.FromResult<dynamic>(mapper.Map<List<Room>>(runtimeRepository.Get()).SortIfOrderable());
         }
 
-        public Task<Room> GetRoom(RequestSession model)
+        public Task<dynamic> GetRoom(RequestSession model)
         {
-            return Task.FromResult(mapper.Map<Room>(runtimeRepository.Get(model.SessionId)));
+            return Task.FromResult<dynamic>(mapper.Map<Room>(runtimeRepository.Get(model.SessionId)));
         }
 
-        public Task<object> GetRoomData(RequestSessionData model)
+        public Task<dynamic> GetRoomData(RequestSessionData model)
         {
             var room = runtimeRepository.Get(model.SessionId);
             if (room == null)
                 throw new ClientException($"Room with id : {model.SessionId} doesn't exist.\n" +
                                           $"Get Request : {model}");
 
-            var dataResult = room.GetData(model.PropertyName);
-            if (!dataResult)
-                throw new ClientException(dataResult.Error);
-
-            return Task.FromResult(dataResult.Value);
+            // ReSharper disable once HeapView.BoxingAllocation
+            return Task.FromResult<dynamic>(model.PropertyName switch
+            {
+                nameof(room.Accepted) => room.Accepted,
+                nameof(room.Info) => room.Info.SortIfOrderable(),
+                nameof(room.Registred) => room.Registred,
+                nameof(room.Name) => room.Name,
+                nameof(room.Order) => room.Order,
+                nameof(room.State) => room.State,
+                nameof(room.Timer) => room.Timer,
+                nameof(room.HasChanges) => room.HasChanges,
+                nameof(room.StartDate) => room.StartDate,
+                nameof(room.Id) => room.Id,
+                nameof(room.Version) => room.Version,
+                _ => throw new ClientException(
+                    $"Get room data operation failed, Unknown [{nameof(model.PropertyName)} : {model.PropertyName}]")
+            });
         }
 
         public Task SetRoomData(ReceiveSessionData model)

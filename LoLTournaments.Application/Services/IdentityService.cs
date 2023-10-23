@@ -15,13 +15,13 @@ namespace LoLTournaments.Application.Services
 
     public interface IIdentityService
     {
-        Task<Account> Login(Account user);
-        Task<Account> Register(Account model);
-        Task<Account> ResetPassword(Account model);
-        Task<Account[]> GetAccounts();
+        Task<dynamic> Login(Account user);
+        Task<dynamic> Register(Account model);
+        Task<dynamic> ResetPassword(Account model);
+        Task<dynamic> GetAccounts();
         Task SetAccountTutorial(Account model);
-        object GetConfig();
-        ApiTime GetApiTime();
+        dynamic GetConfig();
+        dynamic GetApiTime();
     }
 
     public class IdentityService : IIdentityService
@@ -49,7 +49,7 @@ namespace LoLTournaments.Application.Services
             this.signInManager = signInManager;
         }
 
-        public async Task<Account> Login(Account model)
+        public async Task<dynamic> Login(Account model)
         {
             ValidateVersion(model.Version);
             var user = await userManager.FindByNameAsync(model.UserName);
@@ -65,7 +65,7 @@ namespace LoLTournaments.Application.Services
             return mapper.Map<Account>(user);
         }
 
-        public async Task<Account> Register(Account model)
+        public async Task<dynamic> Register(Account model)
         {
             ValidateVersion(model.Version);
             model.Permission = Permissions.Participant;
@@ -83,7 +83,7 @@ namespace LoLTournaments.Application.Services
             return mapper.Map<Account>(user);
         }
 
-        public async Task<Account> ResetPassword(Account model)
+        public async Task<dynamic> ResetPassword(Account model)
         {
             ValidateVersion(model.Version);
             var user = await userManager.FindByNameAsync(model.UserName);
@@ -100,7 +100,7 @@ namespace LoLTournaments.Application.Services
             return mapper.Map<Account>(user);
         }
 
-        public async Task<Account[]> GetAccounts()
+        public async Task<dynamic> GetAccounts()
         {
             return mapper.Map<Account[]>(await dbRepository.Get<UserEntity>().ToArrayAsync());
         }
@@ -112,12 +112,12 @@ namespace LoLTournaments.Application.Services
             await dbRepository.SaveChangesAsync();
         }
 
-        public object GetConfig()
+        public dynamic GetConfig()
         {
             return mapper.Map<SharedConfig>(appSettings);
         }
 
-        public ApiTime GetApiTime()
+        public dynamic GetApiTime()
         {
             return new ApiTime
             {

@@ -30,13 +30,9 @@ namespace LoLTournaments.WebApi.Controllers
             {
                 return Ok(await lobbyService.GetRooms());
             }
-            catch (ClientException ex)
+            catch (Exception e)
             {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return HandleException(e);
             }
         }
 
@@ -49,13 +45,9 @@ namespace LoLTournaments.WebApi.Controllers
             {
                 return Ok(await lobbyService.GetRoom(model));
             }
-            catch (ClientException ex)
+            catch (Exception e)
             {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return HandleException(e);
             }
         }
 
@@ -68,13 +60,9 @@ namespace LoLTournaments.WebApi.Controllers
             {
                 return Ok(await lobbyService.GetRoomData(model));
             }
-            catch (ClientException ex)
+            catch (Exception e)
             {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return HandleException(e);
             }
         }
 
@@ -88,13 +76,9 @@ namespace LoLTournaments.WebApi.Controllers
                 await lobbyService.SetRoomData(model);
                 return Ok();
             }
-            catch (ClientException ex)
+            catch (Exception e)
             {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return HandleException(e);
             }
         }
 
@@ -108,13 +92,9 @@ namespace LoLTournaments.WebApi.Controllers
                 await lobbyService.RemoveRoom(model);
                 return Ok();
             }
-            catch (ClientException ex)
+            catch (Exception e)
             {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return HandleException(e);
             }
         }
 
@@ -128,13 +108,9 @@ namespace LoLTournaments.WebApi.Controllers
                 await lobbyService.UpdateRooms(model);
                 return Ok();
             }
-            catch (ClientException ex)
+            catch (Exception e)
             {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return HandleException(e);
             }
         }
 
@@ -148,13 +124,9 @@ namespace LoLTournaments.WebApi.Controllers
                 await lobbyService.RemoveRegistration(model);
                 return Ok();
             }
-            catch (ClientException ex)
+            catch (Exception e)
             {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return HandleException(e);
             }
         }
 
@@ -168,13 +140,9 @@ namespace LoLTournaments.WebApi.Controllers
                 await lobbyService.UpdateRegistration(model);
                 return Ok();
             }
-            catch (ClientException ex)
+            catch (Exception e)
             {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return HandleException(e);
             }
         }
 
@@ -188,13 +156,9 @@ namespace LoLTournaments.WebApi.Controllers
                 await lobbyService.RemoveAcception(model);
                 return Ok();
             }
-            catch (ClientException ex)
+            catch (Exception e)
             {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return HandleException(e);
             }
         }
 
@@ -208,49 +172,21 @@ namespace LoLTournaments.WebApi.Controllers
                 await lobbyService.UpdateAcception(model);
                 return Ok();
             }
-            catch (ClientException ex)
+            catch (Exception e)
             {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return HandleException(e);
             }
         }
 
-        [HttpGet]
-        [Route(nameof(GetPresset))]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetPresset()
+        private IActionResult HandleException(Exception exception)
         {
-            try
+            return exception switch
             {
-                return Ok(new List<ReceiveSessionData>
-                {
-                    new ReceiveSessionData(new List<ParamInfo>{new(){Value = "value1"}, new(){Value = "value2"}})
-                        {PropertyName = "Info", SessionId = "1"},
-                    
-                    new ReceiveSessionData(new List<string>{"value1","value2"})
-                        {PropertyName = "Registered", SessionId = "1"},
-                    
-                    new ReceiveSessionData(new List<string>{"value1","value2"})
-                        {PropertyName = "Accepted", SessionId = "1"},
-                    
-                    new ReceiveSessionData("SessionName")
-                        {PropertyName = "Name", SessionId = "1"},
-                    
-                    new ReceiveSessionData(100)
-                        {PropertyName = "Order", SessionId = "1"},
-                });
-            }
-            catch (ClientException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+                ForbiddenException => Forbid(exception.Message),
+                ClientException => BadRequest(exception.Message),
+                ValidationException => BadRequest(exception.Message),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, exception.Message),
+            };
         }
     }
 
