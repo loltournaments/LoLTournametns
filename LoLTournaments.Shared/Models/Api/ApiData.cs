@@ -1,23 +1,23 @@
-﻿using System;
+using System;
 using LoLTournaments.Shared.Common;
 using Newtonsoft.Json;
 
 namespace LoLTournaments.Shared.Models
 {
 
-    public class ReceiveSessionData : RequestSessionData
+    public class ApiData
     {
         [JsonRequired] private readonly string value;
         [JsonRequired] private readonly Type valueType;
 
-        public ReceiveSessionData(object value)
+        public ApiData(object value)
         {
             this.value = value is string stringValue ? stringValue : JsonConvert.SerializeObject(value);
             valueType = value.GetType();
         }
 
         [JsonConstructor]
-        public ReceiveSessionData(string value, Type valueType)
+        public ApiData(string value, Type valueType)
         {
             this.value = value;
             this.valueType = valueType;

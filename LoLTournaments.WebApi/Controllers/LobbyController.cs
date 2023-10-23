@@ -181,19 +181,14 @@ namespace LoLTournaments.WebApi.Controllers
 
         private IActionResult HandleException(Exception exception)
         {
+            DefaultSharedLogger.Warning(exception);
             return exception switch
             {
                 ForbiddenException => Forbid(exception.Message),
                 ClientException => BadRequest(exception.Message),
                 ValidationException => BadRequest(exception.Message),
-                _ => InternalServerError(exception),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, exception.Message),
             };
-        }
-
-        private IActionResult InternalServerError(Exception exception)
-        {
-            DefaultSharedLogger.Error(exception);
-            return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
         }
     }
 
