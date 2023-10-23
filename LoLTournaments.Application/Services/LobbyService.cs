@@ -59,7 +59,7 @@ namespace LoLTournaments.Application.Services
             {
                 nameof(room.Accepted) => room.Accepted,
                 nameof(room.Info) => room.Info.SortIfOrderable(),
-                nameof(room.Registred) => room.Registred,
+                nameof(room.Registered) => room.Registered,
                 nameof(room.Name) => room.Name,
                 nameof(room.Order) => room.Order,
                 nameof(room.State) => room.State,
@@ -93,10 +93,10 @@ namespace LoLTournaments.Application.Services
                     model.GetValue<ParamInfo[]>().Foreach(room.Info.Add); 
                     break;
                 }
-                case nameof(room.Registred):
+                case nameof(room.Registered):
                 {
-                    room.Registred.Clear();
-                    model.GetValue<string[]>().Foreach(room.Registred.Add); 
+                    room.Registered.Clear();
+                    model.GetValue<string[]>().Foreach(room.Registered.Add); 
                     break;
                 }
                 case nameof(room.Name): room.Name = model.GetValue(room.Name); break;
@@ -139,7 +139,7 @@ namespace LoLTournaments.Application.Services
                 throw new ClientException($"Can't UnRegistration, missing members.\n" +
                                           $"Request : {model}");
 
-            memberIds.Foreach(id => room.Registred.Remove(id));
+            memberIds.Foreach(id => room.Registered.Remove(id));
             return Task.CompletedTask;
         }
         
@@ -156,8 +156,8 @@ namespace LoLTournaments.Application.Services
             
             foreach (var memberId in memberIds)
             {
-                if (!room.Registred.Contains(memberId))
-                    room.Registred.Add(memberId);
+                if (!room.Registered.Contains(memberId))
+                    room.Registered.Add(memberId);
             }
             
             return Task.CompletedTask;

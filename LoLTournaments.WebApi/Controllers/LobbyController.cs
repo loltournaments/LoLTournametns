@@ -67,9 +67,9 @@ namespace LoLTournaments.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route(nameof(SetRoomData))]
+        [Route(nameof(PostRoomData))]
         [AllowAnonymous]
-        public async Task<IActionResult> SetRoomData([FromBody, NotNull] ReceiveSessionData model)
+        public async Task<IActionResult> PostRoomData([FromBody, NotNull] ReceiveSessionData model)
         {
             try
             {

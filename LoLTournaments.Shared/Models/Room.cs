@@ -16,7 +16,7 @@ namespace LoLTournaments.Shared.Models
         [JsonIgnore] public bool HasChanges { get; set; }
 
         public List<ParamInfo> Info  { get; set; } = new();
-        public List<string> Registred  { get; set; } = new();
+        public List<string> Registered  { get; set; } = new();
         public List<string> Accepted  { get; set; } = new();
     }
 }

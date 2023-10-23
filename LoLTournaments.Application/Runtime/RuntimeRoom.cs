@@ -14,7 +14,7 @@ namespace LoLTournaments.Application.Runtime
         public SessionTimer Timer { get; set; }
         [JsonIgnore] public bool HasChanges { get; set; }
         public SynchronizedCollection<ParamInfo> Info { get; set; } = new();
-        public SynchronizedCollection<string> Registred { get; set; } = new();
+        public SynchronizedCollection<string> Registered { get; set; } = new();
         public SynchronizedCollection<string> Accepted { get; set; } = new();
     }
 
