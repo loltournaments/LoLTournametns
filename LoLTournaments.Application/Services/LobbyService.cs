@@ -33,8 +33,6 @@ namespace LoLTournaments.Application.Services
         {
             this.mapper = mapper;
             this.runtimeRepository = runtimeRepository;
-            runtimeRepository.Add(new RuntimeRoom{Id = "1"});
-            runtimeRepository.Add(new RuntimeRoom{Id = "2"});
         }
 
         public Task<dynamic> GetRooms()
