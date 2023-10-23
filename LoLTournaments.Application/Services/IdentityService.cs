@@ -85,7 +85,6 @@ namespace LoLTournaments.Application.Services
 
         public async Task<dynamic> ResetPassword(Account model)
         {
-            ValidateVersion(model.Version);
             var user = await userManager.FindByNameAsync(model.UserName);
 
             if (user == null)
