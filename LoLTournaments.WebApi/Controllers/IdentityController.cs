@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using LoLTournaments.Application.Exceptions;
 using LoLTournaments.Application.Services;
+using LoLTournaments.Shared.Common;
 using LoLTournaments.Shared.Models;
 using LoLTournaments.WebApi.Utilities;
 using Microsoft.AspNetCore.Authorization;
@@ -197,6 +198,7 @@ namespace LoLTournaments.WebApi.Controllers
 
         private IActionResult HandleException(Exception exception)
         {
+            DefaultSharedLogger.Error(exception);
             return exception switch
             {
                 ForbiddenException => Forbid(exception.Message),
