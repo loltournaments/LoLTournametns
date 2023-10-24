@@ -13,7 +13,7 @@ namespace LoLTournaments.WebApi.Controllers
     [Route("api/" + VersionInfo.APIVersion + "/[controller]")]
     [ApiController]
     [Authorize]
-    public class LobbyController : ControllerBase
+    public class LobbyController : ControllerBaseExtended
     {
         private readonly ILobbyService lobbyService;
 
@@ -100,13 +100,13 @@ namespace LoLTournaments.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route(nameof(UpdateRooms))]
+        [Route(nameof(UpdateRoom))]
         [AllowAnonymous]
-        public async Task<IActionResult> UpdateRooms([FromBody, NotNull] ReceiveSessionData model)
+        public async Task<IActionResult> UpdateRoom([FromBody, NotNull] ReceiveSessionData model)
         {
             try
             {
-                await lobbyService.UpdateRooms(model);
+                await lobbyService.UpdateRoom(model);
                 return Ok();
             }
             catch (Exception e)
@@ -177,18 +177,6 @@ namespace LoLTournaments.WebApi.Controllers
             {
                 return HandleException(e);
             }
-        }
-
-        private IActionResult HandleException(Exception exception)
-        {
-            DefaultSharedLogger.Warning(exception);
-            return exception switch
-            {
-                ForbiddenException => Forbid(exception.Message),
-                ClientException => BadRequest(exception.Message),
-                ValidationException => BadRequest(exception.Message),
-                _ => StatusCode(StatusCodes.Status500InternalServerError, exception.Message),
-            };
         }
     }
 

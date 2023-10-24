@@ -13,7 +13,7 @@ namespace LoLTournaments.WebApi.Controllers
     [Route("api/" + VersionInfo.APIVersion + "/[controller]")]
     [ApiController]
     [Authorize]
-    public class IdentityController : ControllerBase
+    public class IdentityController : ControllerBaseExtended
     {
         private readonly IIdentityService identityService;
         private readonly IAccountInfoService accountInfoService;
@@ -194,23 +194,6 @@ namespace LoLTournaments.WebApi.Controllers
             {
                 return Task.FromResult(HandleException(e));
             }
-        }
-
-        private IActionResult HandleException(Exception exception)
-        {
-            return exception switch
-            {
-                ForbiddenException => Forbid(exception.Message),
-                ClientException => BadRequest(exception.Message),
-                ValidationException => BadRequest(exception.Message),
-                _ => InternalServerError(exception),
-            };
-        }
-
-        private IActionResult InternalServerError(Exception exception)
-        {
-            DefaultSharedLogger.Error(exception);
-            return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
         }
     }
 

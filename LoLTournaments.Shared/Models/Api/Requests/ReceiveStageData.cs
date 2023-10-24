@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 namespace LoLTournaments.Shared.Models
 {
 
-    public class ReceiveStageData : RequestStage
+    public class ReceiveStageData : RequestStageData
     {
         public ApiData Data { get; }
 

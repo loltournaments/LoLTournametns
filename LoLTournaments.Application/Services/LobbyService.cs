@@ -14,7 +14,7 @@ namespace LoLTournaments.Application.Services
         Task<dynamic> GetRoomData(RequestSessionData model);
         Task SetRoomData(ReceiveSessionData model);
         Task RemoveRoom(RequestSession model);
-        Task UpdateRooms(ReceiveSessionData model);
+        Task UpdateRoom(ReceiveSessionData model);
         Task RemoveRegistration(ReceiveSessionData model);
         Task UpdateRegistration(ReceiveSessionData model);
         Task RemoveAcception(ReceiveSessionData model);
@@ -107,7 +107,7 @@ namespace LoLTournaments.Application.Services
             return Task.CompletedTask;
         }
 
-        public Task UpdateRooms(ReceiveSessionData model)
+        public Task UpdateRoom(ReceiveSessionData model)
         {
             if (!model.Data.TryGetValue(out RuntimeRoom[] rooms))
                 throw new ClientException($"Can't update rooms, rooms is missing : {model}.");
