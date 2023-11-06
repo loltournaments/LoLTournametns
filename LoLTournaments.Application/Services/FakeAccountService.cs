@@ -49,13 +49,16 @@ namespace LoLTournaments.Application.Services
         public async Task<Account[]> GenerateAsync(int? count = null)
         {
             var fakeAccountCount = count ?? appSettings.FakeAccountCount;
-            var existNames = await dbRepository.Get<UserEntity>()
+            var fakeAccount = await dbRepository.Get<UserEntity>()
                 .Where(x => x.Permission == DefaultPermissions)
-                .Select(x => x.UserName)
                 .ToListAsync();
+            
+            var existNames = fakeAccount
+                .Select(x => x.UserName)
+                .ToList();
 
             if (existNames.Count >= appSettings.FakeAccountCount)
-                throw new ClientException("Fake accounts count enough.");
+                return mapper.Map<Account[]>(fakeAccount);
 
             var retryCount = 0;
             var newUserNames = new List<string>();

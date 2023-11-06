@@ -236,6 +236,71 @@ namespace LoLTournaments.WebApi.Controllers
         }
 
         [HttpPost]
+        [Route(nameof(UpdateStage))]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateStage([FromBody, NotNull] ReceiveStageData model)
+        {
+            try
+            {
+                await sessionService.UpdateStage(model);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return HandleException(e);
+            }
+        }
+
+        [HttpPost]
+        [Route(nameof(UpdateGroup))]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateGroup([FromBody, NotNull] ReceiveGroupData model)
+        {
+            try
+            {
+                await sessionService.UpdateGroup(model);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return HandleException(e);
+            }
+        }
+
+        [HttpPost]
+        [Route(nameof(UpdateGame))]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateGame([FromBody, NotNull] ReceiveGameData model)
+        {
+            try
+            {
+                await sessionService.UpdateGame(model);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return HandleException(e);
+            }
+        }
+
+        [HttpPost]
+        [Route(nameof(UpdateMember))]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateMember([FromBody, NotNull] ReceiveSessionData model)
+        {
+            try
+            {
+                await sessionService.UpdateMember(model);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return HandleException(e);
+            }
+        }
+
+
+        [HttpPost]
         [Route(nameof(RemoveSession))]
         [AllowAnonymous]
         public async Task<IActionResult> RemoveSession([FromBody, NotNull] RequestSession model)
@@ -243,6 +308,70 @@ namespace LoLTournaments.WebApi.Controllers
             try
             {
                 await sessionService.RemoveSession(model);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return HandleException(e);
+            }
+        }
+
+        [HttpPost]
+        [Route(nameof(RemoveStage))]
+        [AllowAnonymous]
+        public async Task<IActionResult> RemoveStage([FromBody, NotNull] RequestStage model)
+        {
+            try
+            {
+                await sessionService.RemoveStage(model);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return HandleException(e);
+            }
+        }
+
+        [HttpPost]
+        [Route(nameof(RemoveGroup))]
+        [AllowAnonymous]
+        public async Task<IActionResult> RemoveGroup([FromBody, NotNull] RequestGroup model)
+        {
+            try
+            {
+                await sessionService.RemoveGroup(model);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return HandleException(e);
+            }
+        }
+
+        [HttpPost]
+        [Route(nameof(RemoveGame))]
+        [AllowAnonymous]
+        public async Task<IActionResult> RemoveGame([FromBody, NotNull] RequestGame model)
+        {
+            try
+            {
+                await sessionService.RemoveGame(model);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return HandleException(e);
+            }
+        }
+        
+        [HttpPost]
+        [Route(nameof(RemoveMember))]
+        [AllowAnonymous]
+        public async Task<IActionResult> RemoveMember([FromBody, NotNull] ReceiveSessionData model)
+        {
+            try
+            {
+                await sessionService.RemoveMember(model);
                 return Ok();
             }
             catch (Exception e)

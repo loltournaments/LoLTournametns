@@ -1,3 +1,4 @@
+using System.Dynamic;
 using LoLTournaments.Application.Exceptions;
 using LoLTournaments.Application.Runtime;
 using LoLTournaments.Domain.Abstractions;
@@ -23,7 +24,15 @@ namespace LoLTournaments.Application.Services
         Task SetGroupData(ReceiveGroupData model);
         Task SetGameData(ReceiveGameData model);
         Task UpdateSession(ReceiveSessionData model);
+        Task UpdateStage(ReceiveStageData model);
+        Task UpdateGroup(ReceiveGroupData model);
+        Task UpdateGame(ReceiveGameData model);
+        Task UpdateMember(ReceiveSessionData model);
+        Task RemoveMember(ReceiveSessionData model);
         Task RemoveSession(RequestSession model);
+        Task RemoveStage(RequestStage model);
+        Task RemoveGroup(RequestGroup model);
+        Task RemoveGame(RequestGame model);
     }
 
     public class SessionService : ISessionService
@@ -63,8 +72,9 @@ namespace LoLTournaments.Application.Services
         public Task<dynamic> GetSessionData(RequestSessionData model)
         {
             var session = RequestSession(model);
+            
             // ReSharper disable once HeapView.BoxingAllocation
-            return Task.FromResult<dynamic>(model.PropertyName switch
+            object result = model.PropertyName switch
             {
                 nameof(session.Members) => session.Members.SortIfOrderable(),
                 nameof(session.Order) => session.Order,
@@ -75,14 +85,18 @@ namespace LoLTournaments.Application.Services
                 nameof(session.Version) => session.Version,
                 _ => throw new ClientException(
                     $"Get session data operation failed, Unknown [{nameof(model.PropertyName)} : {model.PropertyName}]")
-            });
+            };
+            
+            var resultObj = new ExpandoObject();
+            resultObj.TryAdd(model.PropertyName, result);
+            return Task.FromResult<dynamic>(resultObj);
         }
 
         public Task<dynamic> GetStageData(RequestStageData model)
         {
             var stage = RequestStage(model);
             // ReSharper disable once HeapView.BoxingAllocation
-            return Task.FromResult<dynamic>(model.PropertyName switch
+            object result = model.PropertyName switch
             {
                 nameof(stage.Groups) => stage.Groups.SortIfOrderable(),
                 nameof(stage.Order) => stage.Order,
@@ -92,14 +106,18 @@ namespace LoLTournaments.Application.Services
                 nameof(stage.Version) => stage.Version,
                 _ => throw new ClientException(
                     $"Get stage data operation failed, Unknown [{nameof(model.PropertyName)} : {model.PropertyName}]")
-            });
-        }
+            };
+            
+            var resultObj = new ExpandoObject();
+            resultObj.TryAdd(model.PropertyName, result);
+            return Task.FromResult<dynamic>(resultObj);
+        } // TODO not used
 
         public Task<dynamic> GetGroupData(RequestGroupData model)
         {
             var group = RequestGroup(model);
             // ReSharper disable once HeapView.BoxingAllocation
-            return Task.FromResult<dynamic>(model.PropertyName switch
+            object result = model.PropertyName switch
             {
                 nameof(group.Games) => group.Games.SortIfOrderable(),
                 nameof(group.Members) => group.Members.SortIfOrderable(),
@@ -109,14 +127,18 @@ namespace LoLTournaments.Application.Services
                 nameof(group.Version) => group.Version,
                 _ => throw new ClientException(
                     $"Get group data operation failed, Unknown [{nameof(model.PropertyName)} : {model.PropertyName}]")
-            });
-        }
+            };
+            
+            var resultObj = new ExpandoObject();
+            resultObj.TryAdd(model.PropertyName, result);
+            return Task.FromResult<dynamic>(resultObj);
+        } // TODO not used
 
         public Task<dynamic> GetGameData(RequestGameData model)
         {
             var game = RequestGame(model);
             // ReSharper disable once HeapView.BoxingAllocation
-            return Task.FromResult<dynamic>(model.PropertyName switch
+            object result = model.PropertyName switch
             {
                 nameof(game.Members) => game.Members.SortIfOrderable(),
                 nameof(game.Order) => game.Order,
@@ -128,8 +150,12 @@ namespace LoLTournaments.Application.Services
                 nameof(game.Version) => game.Version,
                 _ => throw new ClientException(
                     $"Get game data operation failed, Unknown [{nameof(model.PropertyName)} : {model.PropertyName}]")
-            });
-        }
+            };
+            
+            var resultObj = new ExpandoObject();
+            resultObj.TryAdd(model.PropertyName, result);
+            return Task.FromResult<dynamic>(resultObj);
+        } // TODO not used
 
         public Task SetSessionData(ReceiveSessionData model)
         {
@@ -140,19 +166,19 @@ namespace LoLTournaments.Application.Services
                 case nameof(session.Members):
                 {
                     session.Members.Clear();
-                    model.Data.GetValue<RuntimeMember[]>().SortIfOrderable().Foreach(session.Members.Add);
+                    model.Data.GetValue<List<RuntimeMember>>().SortIfOrderable().Foreach(session.Members.Add);
                     break;
                 }
                 case nameof(session.Stages):
                 {
                     session.Stages.Clear();
-                    model.Data.GetValue<RuntimeStage[]>().SortIfOrderable().Foreach(session.Stages.Add);
+                    model.Data.GetValue<List<RuntimeStage>>().SortIfOrderable().Foreach(session.Stages.Add);
                     break;
                 }
                 case nameof(session.Winners):
                 {
                     session.Winners.Clear();
-                    model.Data.GetValue<RuntimeWinner[]>().SortIfOrderable().Foreach(session.Winners.Add);
+                    model.Data.GetValue<List<RuntimeWinner>>().SortIfOrderable().Foreach(session.Winners.Add);
                     break;
                 }
                 case nameof(session.Order):
@@ -183,7 +209,7 @@ namespace LoLTournaments.Application.Services
                 case nameof(stage.Groups):
                 {
                     stage.Groups.Clear();
-                    model.Data.GetValue<RuntimeGroup[]>().SortIfOrderable().Foreach(stage.Groups.Add);
+                    model.Data.GetValue<List<RuntimeGroup>>().SortIfOrderable().Foreach(stage.Groups.Add);
                     break;
                 }
                 case nameof(stage.Winners):
@@ -210,7 +236,7 @@ namespace LoLTournaments.Application.Services
             }
 
             return Task.CompletedTask;
-        }
+        } // TODO not used
 
         public Task SetGroupData(ReceiveGroupData model)
         {
@@ -220,7 +246,7 @@ namespace LoLTournaments.Application.Services
                 case nameof(group.Games):
                 {
                     group.Games.Clear();
-                    model.Data.GetValue<RuntimeGame[]>().SortIfOrderable().Foreach(group.Games.Add);
+                    model.Data.GetValue<List<RuntimeGame>>().SortIfOrderable().Foreach(group.Games.Add);
                     break;
                 }
                 case nameof(group.Members):
@@ -297,10 +323,90 @@ namespace LoLTournaments.Application.Services
             runtimeRepository.Replace(sessions);
             return Task.CompletedTask;
         }
+        
+        public Task UpdateStage(ReceiveStageData model)
+        {
+            if (!model.Data.TryGetValue(out RuntimeStage[] stages))
+                throw new ClientException($"Can't update stage, stages is missing : {model}.");
+
+            var session = RequestSession(model);
+            session.Stages.Replace(stages);
+            session.Stages.SortIfOrderable();
+            return Task.CompletedTask;
+        }
+        
+        public Task UpdateGroup(ReceiveGroupData model)
+        {
+            if (!model.Data.TryGetValue(out RuntimeGroup[] groups))
+                throw new ClientException($"Can't update group, groups is missing : {model}.");
+
+            var stage = RequestStage(model);
+            stage.Groups.Replace(groups);
+            stage.Groups.SortIfOrderable();
+            return Task.CompletedTask;
+        }
+        
+        public Task UpdateGame(ReceiveGameData model)
+        {
+            if (!model.Data.TryGetValue(out RuntimeGame[] games))
+                throw new ClientException($"Can't update game, games is missing : {model}.");
+
+            var group = RequestGroup(model);
+            group.Games.Replace(games);
+            group.Games.SortIfOrderable();
+            return Task.CompletedTask;
+        }
+        
+        public Task UpdateMember(ReceiveSessionData model)
+        {
+            if (!model.Data.TryGetValue(out RuntimeMember[] members))
+                throw new ClientException($"Can't update session member, members is missing : {model}.");
+
+            var session = RequestSession(model);
+            session.Members.Replace(members);
+            return Task.CompletedTask;
+        }
 
         public Task RemoveSession(RequestSession model)
         {
             runtimeRepository.Remove(model.SessionId);
+            return Task.CompletedTask;
+        }
+        
+        public Task RemoveStage(RequestStage model)
+        {
+            var session = RequestSession(model);
+            var stage = session.Stages.FirstOrDefault(x => x.Id == model.StageId);
+            session.Stages.Remove(stage);
+            session.Stages.SortIfOrderable();
+            return Task.CompletedTask;
+        }
+        
+        public Task RemoveGroup(RequestGroup model)
+        {
+            var stage = RequestStage(model);
+            var group = stage.Groups.FirstOrDefault(x => x.Id == model.GroupId);
+            stage.Groups.Remove(group);
+            stage.Groups.SortIfOrderable();
+            return Task.CompletedTask;
+        }
+        
+        public Task RemoveGame(RequestGame model)
+        {
+            var group = RequestGroup(model);
+            var game = RequestGame(model);
+            group.Games.Remove(game);
+            group.Games.SortIfOrderable();
+            return Task.CompletedTask;
+        }
+        
+        public Task RemoveMember(ReceiveSessionData model)
+        {
+            if (!model.Data.TryGetValue(out RuntimeMember[] members))
+                throw new ClientException($"Can't remove session member, members is missing : {model}.");
+            
+            var session = RequestSession(model);
+            members.Foreach(member => session.Members.Remove(session.Members.FirstOrDefault(x=> x.Id == member.Id)));
             return Task.CompletedTask;
         }
 
@@ -308,8 +414,8 @@ namespace LoLTournaments.Application.Services
         {
             var session = runtimeRepository.Get(model.SessionId);
             if (session == null)
-                throw new ClientException($"Session with id : {model.SessionId} doesn't exist.\n" +
-                                          $"Get Request : {model}");
+                throw new NotFoundException($"Session with id : {model.SessionId} doesn't exist.\n" +
+                                            $"Get Request : {model}");
             return session;
         }
 
@@ -319,8 +425,8 @@ namespace LoLTournaments.Application.Services
             var stage = session.Stages.FirstOrDefault(x => x.Id == model.StageId);
 
             if (stage == null)
-                throw new ClientException($"Stage with id : {model.StageId} doesn't exist.\n" +
-                                          $"Get Request : {model}");
+                throw new NotFoundException($"Stage with id : {model.StageId} doesn't exist.\n" +
+                                            $"Get Request : {model}");
             return stage;
         }
 
@@ -329,8 +435,8 @@ namespace LoLTournaments.Application.Services
             var stage = RequestStage(model);
             var group = stage.Groups.FirstOrDefault(x => x.Id == model.GroupId);
             if (group == null)
-                throw new ClientException($"Group with id : {model.GroupId} doesn't exist.\n" +
-                                          $"Get Request : {model}");
+                throw new NotFoundException($"Group with id : {model.GroupId} doesn't exist.\n" +
+                                            $"Get Request : {model}");
             return group;
         }
 
@@ -339,7 +445,7 @@ namespace LoLTournaments.Application.Services
             var group = RequestGroup(model);
             var game = group.Games.FirstOrDefault(x => x.Id == model.GameId);
             if (game == null)
-                throw new ClientException($"Game with id : {model.GameId} doesn't exist.\n" +
+                throw new NotFoundException($"Game with id : {model.GameId} doesn't exist.\n" +
                                           $"Get Request : {model}");
             return game;
         }

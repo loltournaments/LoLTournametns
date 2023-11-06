@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using LoLTournaments.Shared.Common;
 
 namespace LoLTournaments.Shared.Utilities
 {
@@ -118,6 +120,79 @@ namespace LoLTournaments.Shared.Utilities
             var index = 0;
             foreach (var item in enumerable)
                 result(item, index++);
+        }
+
+        /// <summary>
+        /// Replaces an element in the list or add if it new.
+        /// For proper replacement you need to implement Equal methods to compare each other.
+        /// </summary>
+        /// <returns>if replace was successful</returns>
+        public static bool Replace(this IList source, object item)
+        {
+            if (source == null)
+            {
+                DefaultSharedLogger.Error($"Source IList does not exist");
+                return false;
+            }
+            
+            if (item == null)
+            {
+                DefaultSharedLogger.Error("Item does not exist");
+                return false;
+            }
+            
+            var index = source.IndexOf(item);
+            var hasItem = index >= 0;
+            index = hasItem ? index : Math.Max(0, source.Count - 1);
+            if (hasItem)
+                source.RemoveAt(index);
+            source.Insert(index, item);
+            return true;
+        }
+        
+        /// <summary>
+        /// Replaces elements in the list or add if it new.
+        /// For proper replacement you need to implement Equal methods to compare each other.
+        /// </summary>
+        /// <returns>if replace was successful</returns>
+        public static bool Replace<T>(this IList source, IEnumerable<T> items)
+        {
+            return items != null && source != null && items.All(item => Replace(source, item));
+        }
+        
+        /// <summary>
+        /// Move element in the list to target index.
+        /// For proper move you need to implement Equal methods to compare each other.
+        /// </summary>
+        public static void Move(this IList source, object item, int toIndex = 0)
+        {
+            if (source == null)
+            {
+                DefaultSharedLogger.Error($"Source IList does not exist");
+                return;
+            }
+            
+            if (item == null)
+            {
+                DefaultSharedLogger.Error("Item does not exist");
+                return;
+            }
+
+            if (toIndex < 0 || toIndex >= source.Count)
+            {
+                DefaultSharedLogger.Error($"Can't move item to index which out of range: {toIndex}, closer: {Math.Clamp(toIndex, 0, source.Count - 1)}");
+                return;
+            }
+            
+            var index = source.IndexOf(item);
+            if (index < 0)
+            {
+                DefaultSharedLogger.Error("Item doesn't exist in collection.");
+                return;
+            }
+            
+            source.RemoveAt(index);
+            source.Insert(Math.Clamp(toIndex, 0, source.Count - 1), item);
         }
     }
 }

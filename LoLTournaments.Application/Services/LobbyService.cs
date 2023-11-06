@@ -1,4 +1,5 @@
-﻿using LoLTournaments.Application.Exceptions;
+﻿using System.Dynamic;
+using LoLTournaments.Application.Exceptions;
 using LoLTournaments.Application.Runtime;
 using LoLTournaments.Domain.Abstractions;
 using LoLTournaments.Shared.Models;
@@ -45,7 +46,7 @@ namespace LoLTournaments.Application.Services
             var room = RequestRoom(model);
 
             // ReSharper disable once HeapView.BoxingAllocation
-            return Task.FromResult<dynamic>(model.PropertyName switch
+            object result = model.PropertyName switch
             {
                 nameof(room.Accepted) => room.Accepted,
                 nameof(room.Info) => room.Info.SortIfOrderable(),
@@ -60,7 +61,11 @@ namespace LoLTournaments.Application.Services
                 nameof(room.Version) => room.Version,
                 _ => throw new ClientException(
                     $"Get room data operation failed, Unknown [{nameof(model.PropertyName)} : {model.PropertyName}]")
-            });
+            };
+            
+            var resultObj = new ExpandoObject();
+            resultObj.TryAdd(model.PropertyName, result);
+            return Task.FromResult<dynamic>(resultObj);
         }
 
         public Task SetRoomData(ReceiveSessionData model)
@@ -136,12 +141,7 @@ namespace LoLTournaments.Application.Services
                 throw new ClientException($"Can't update registration, missing members.\n" +
                                           $"Request : {model}");
             
-            foreach (var memberId in memberIds)
-            {
-                if (!room.Registered.Contains(memberId))
-                    room.Registered.Add(memberId);
-            }
-            
+            room.Registered.Replace(memberIds);
             return Task.CompletedTask;
         }
         
@@ -164,13 +164,8 @@ namespace LoLTournaments.Application.Services
             if (!model.Data.TryGetValue(out string[] memberIds))
                 throw new ClientException($"Can't update acception, missing members.\n" +
                                           $"Request : {model}");
-            
-            foreach (var memberId in memberIds)
-            {
-                if (!room.Accepted.Contains(memberId))
-                    room.Accepted.Add(memberId);
-            }
-            
+
+            room.Accepted.Replace(memberIds);
             return Task.CompletedTask;
         }
 
