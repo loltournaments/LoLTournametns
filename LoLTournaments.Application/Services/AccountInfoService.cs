@@ -56,10 +56,10 @@ namespace LoLTournaments.Application.Services
                 var jsonData = await response.Content.ReadAsStringAsync();
                 var playerInfo = JsonConvert.DeserializeObject<LeagueOfLegendsPlayerInfo>(jsonData);
                 var accountInfo = mapper.Map<AccountInfo>(playerInfo);
-                accountInfo.IconUrl = appSettings.IconsPath.Replace("[name]", accountInfo.IconUrl).Replace(" ", "%20");
 
-                if (accountInfo.Available)
-                    accountInfo.Known = (await userManager.FindByNameAsync(userName)) != null;
+                accountInfo.IconUrl = string.IsNullOrEmpty(accountInfo.IconUrl) ? "default" : appSettings.IconsPath.Replace("[name]", accountInfo.IconUrl).Replace(" ", "%20");
+                accountInfo.Known = (await userManager.FindByNameAsync(userName)) != null;
+                accountInfo.Name ??= userName;
                 
                 return accountInfo;
             }
