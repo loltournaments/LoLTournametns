@@ -14,6 +14,7 @@ namespace LoLTournaments.WebApi.Controllers
                 ForbiddenException => Forbid(exception.Message),
                 ClientException => BadRequest(exception.Message),
                 ValidationException => BadRequest(exception.Message),
+                UnauthorizedHttpException => Unauthorized(exception.Message),
                 NotFoundException => NotFound(exception.Message),
                 _ => InternalServerError(exception),
             };

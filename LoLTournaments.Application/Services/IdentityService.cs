@@ -55,11 +55,10 @@ namespace LoLTournaments.Application.Services
             var user = await userManager.FindByNameAsync(model.UserName);
             
             if (appSettings.IsMaintenanceMode && !user.Permission.HasAllFlags(Permissions.Manager))
-                throw new ForbiddenException(
-                    $"We are updating app servers to provide you with the best experience possible.");
+                throw new ForbiddenException($"We are updating app server to provide you with the best experience possible.");
             
             if (user == null || !await userManager.CheckPasswordAsync(user, model.Password))
-                throw new ValidationException($"Invalid Credentials");
+                throw new UnauthorizedHttpException($"Invalid Credentials");
 
             await signInManager.SignInAsync(user, new AuthenticationProperties {IsPersistent = true});
             return mapper.Map<Account>(user);
@@ -88,7 +87,7 @@ namespace LoLTournaments.Application.Services
             var user = await userManager.FindByNameAsync(model.UserName);
 
             if (user == null)
-                throw new ValidationException($"User {model.UserName} doesn't exist");
+                throw new NotFoundException($"User {model.UserName} doesn't exist");
 
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
             var result = await userManager.ResetPasswordAsync(user, token, model.Password);
