@@ -173,8 +173,8 @@ namespace LoLTournaments.Application.Services
         {
             var room = runtimeRepository.Get(model.SessionId);
             if (room == null)
-                throw new ClientException($"Room with id : {model.SessionId} doesn't exist.\n" +
-                                          $"Get Request : {model}");
+                throw new NotFoundException($"Room with id : {model.SessionId} doesn't exist.\n" + 
+                                            $"Get Request : {model}");
             return room;
         }
     }
