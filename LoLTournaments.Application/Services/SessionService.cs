@@ -2,7 +2,6 @@ using System.Dynamic;
 using LoLTournaments.Application.Exceptions;
 using LoLTournaments.Application.Runtime;
 using LoLTournaments.Domain.Abstractions;
-using LoLTournaments.Shared.Common;
 using LoLTournaments.Shared.Models;
 using LoLTournaments.Shared.Utilities;
 
@@ -47,20 +46,6 @@ namespace LoLTournaments.Application.Services
         {
             this.runtimeRepository = runtimeRepository;
             this.runtimeBackupService = runtimeBackupService;
-            InitializeAsync();
-        }
-
-        private async void InitializeAsync()
-        {
-            try
-            {
-                await Task.Yield();
-                await runtimeBackupService.RestoreAsync();
-            }
-            catch (Exception e)
-            {
-                DefaultSharedLogger.Error(e);
-            }
         }
 
         public Task<dynamic> GetSessions()

@@ -1,4 +1,5 @@
-﻿using LoLTournaments.Application.Runtime;
+﻿using LoLTournaments.Application.Bootstraps;
+using LoLTournaments.Application.Runtime;
 using LoLTournaments.Application.Services;
 using LoLTournaments.Domain.Abstractions;
 using LoLTournaments.Domain.Entities;
@@ -17,6 +18,8 @@ namespace LoLTournaments.Application.Infrastructure
         {
             var appSettings = configuration.GetSection("AppSettings").Get<AppSettings>();
             services.AddAutoMapper(typeof(AppMappingProfile));
+            services.AddScoped<BootstrapService>();
+            services.AddScoped<IBootstrapCmd, AppBootstarp>();
             
             services.AddScoped<IDbRepository, DbRepository<AppDbContext>>();
             services.AddScoped<IIdentityService, IdentityService>();

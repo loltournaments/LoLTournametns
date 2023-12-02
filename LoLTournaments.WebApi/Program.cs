@@ -1,4 +1,5 @@
 using LoLTournaments.Application.Infrastructure;
+using LoLTournaments.Application.Services;
 using LoLTournaments.Domain.Entities;
 using LoLTournaments.Infrastructure.Presistence;
 using LoLTournaments.Shared.Abstractions;
@@ -119,4 +120,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapGet("/", () => "Hello World!");
-app.Run();
+var appTask = app.RunAsync();
+app.Services.CreateScope().ServiceProvider.GetService<BootstrapService>();
+await appTask;

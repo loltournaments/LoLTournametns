@@ -56,9 +56,10 @@ namespace LoLTournaments.Application.Services
         public async Task RestoreAsync(bool force = false)
         {
             var availableEntities = await dbRepository.Get<TEntity>().ToListAsync();
-            var restoredEntities = mapper.Map<TData[]>(availableEntities);
             runtimeRepository.Clear();
-            runtimeRepository.AddRange(restoredEntities);
+            
+            if (availableEntities.Any())
+                runtimeRepository.AddRange(mapper.Map<TData[]>(availableEntities));
         }
     }
 

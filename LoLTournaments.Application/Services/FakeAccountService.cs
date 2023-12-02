@@ -1,6 +1,5 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
-using LoLTournaments.Application.Exceptions;
 using LoLTournaments.Domain.Abstractions;
 using LoLTournaments.Domain.Entities;
 using LoLTournaments.Shared.Common;
