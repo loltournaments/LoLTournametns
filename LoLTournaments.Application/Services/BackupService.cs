@@ -20,7 +20,7 @@ namespace LoLTournaments.Application.Services
         private readonly IDbRepository dbRepository;
         private readonly IRuntimeRepository<TData> runtimeRepository;
         private const double TimeBetweenBackup = 20d;
-        private DateTime nextBackup;
+        private static DateTime nextBackup;
 
         public BackupService(
             IMapper mapper,
