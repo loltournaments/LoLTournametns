@@ -9,6 +9,7 @@ namespace LoLTournaments.Domain.Abstractions
         IEnumerable<TValue> Get(Func<TValue, bool> predicat);
         IEnumerable<TValue> Get();
         void Add(TValue value);
+        void AddRange(IEnumerable<TValue> value);
         bool Replace(TValue value);
         bool Replace(IEnumerable<TValue> value);
         bool Remove(TValue value);

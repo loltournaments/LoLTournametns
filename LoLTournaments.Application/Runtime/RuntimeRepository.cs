@@ -37,6 +37,11 @@ namespace LoLTournaments.Application.Runtime
             Storage.Add(value);
         }
 
+        public void AddRange(IEnumerable<TValue> value)
+        {
+            value?.Foreach(Add);
+        }
+
         public bool Replace(TValue value)
         {
             return Storage.Replace(value);

@@ -2,6 +2,7 @@
 using LoLTournaments.Application.Exceptions;
 using LoLTournaments.Application.Runtime;
 using LoLTournaments.Domain.Abstractions;
+using LoLTournaments.Shared.Common;
 using LoLTournaments.Shared.Models;
 using LoLTournaments.Shared.Utilities;
 
@@ -25,12 +26,29 @@ namespace LoLTournaments.Application.Services
     public class LobbyService : ILobbyService
     {
         private readonly IRuntimeRepository<RuntimeRoom> runtimeRepository;
-
-        public LobbyService(IRuntimeRepository<RuntimeRoom> runtimeRepository)
+        private readonly IRuntimeBackupService<RuntimeRoom> runtimeBackupService;
+        public LobbyService(
+            IRuntimeRepository<RuntimeRoom> runtimeRepository,
+            IRuntimeBackupService<RuntimeRoom> runtimeBackupService)
         {
             this.runtimeRepository = runtimeRepository;
+            this.runtimeBackupService = runtimeBackupService;
+            InitializeAsync();
         }
-
+        
+        private async void InitializeAsync()
+        {
+            try
+            {
+                await Task.Yield();
+                await runtimeBackupService.RestoreAsync();
+            }
+            catch (Exception e)
+            {
+                DefaultSharedLogger.Error(e);
+            }
+        }
+        
         public Task<dynamic> GetRooms()
         {
             return Task.FromResult<dynamic>(runtimeRepository.Get().ToList().SortIfOrderable());
@@ -68,7 +86,7 @@ namespace LoLTournaments.Application.Services
             return Task.FromResult<dynamic>(resultObj);
         }
 
-        public Task SetRoomData(ReceiveSessionData model)
+        public async Task SetRoomData(ReceiveSessionData model)
         {
             var room = RequestRoom(model);
 
@@ -101,27 +119,27 @@ namespace LoLTournaments.Application.Services
                 case nameof(room.Id): room.Id = model.Data.GetValue(room.Id); break;
                 case nameof(room.Version): room.Version = model.Data.GetValue(room.Version); break;
                 default: throw new ClientException($"Set room data operation failed, Unknown [{nameof(model.PropertyName)} : {model.PropertyName}]");
-            } 
-            
-            return Task.CompletedTask;
+            }
+
+            await runtimeBackupService.BackupAsync(true);
         }
 
-        public Task RemoveRoom(RequestSession model)
+        public async Task RemoveRoom(RequestSession model)
         {
             runtimeRepository.Remove(model.SessionId);
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync(true);
         }
 
-        public Task UpdateRoom(ReceiveSessionData model)
+        public async Task UpdateRoom(ReceiveSessionData model)
         {
             if (!model.Data.TryGetValue(out RuntimeRoom[] rooms))
                 throw new ClientException($"Can't update rooms, rooms is missing : {model}.");
 
             runtimeRepository.Replace(rooms);
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync(true);
         }
         
-        public Task RemoveRegistration(ReceiveSessionData model)
+        public async Task RemoveRegistration(ReceiveSessionData model)
         {
             var room = RequestRoom(model);
             
@@ -130,10 +148,10 @@ namespace LoLTournaments.Application.Services
                                           $"Request : {model}");
 
             memberIds.Foreach(id => room.Registered.Remove(id));
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync();
         }
         
-        public Task UpdateRegistration(ReceiveSessionData model)
+        public async Task UpdateRegistration(ReceiveSessionData model)
         {
             var room = RequestRoom(model);
             
@@ -142,10 +160,10 @@ namespace LoLTournaments.Application.Services
                                           $"Request : {model}");
             
             room.Registered.Replace(memberIds);
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync();
         }
         
-        public Task RemoveAcception(ReceiveSessionData model)
+        public async Task RemoveAcception(ReceiveSessionData model)
         {
             var room = RequestRoom(model);
             
@@ -154,10 +172,10 @@ namespace LoLTournaments.Application.Services
                                           $"Request : {model}");
             
             memberIds.Foreach(id => room.Accepted.Remove(id));
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync();
         }
         
-        public Task UpdateAcception(ReceiveSessionData model)
+        public async Task UpdateAcception(ReceiveSessionData model)
         {
             var room = RequestRoom(model);
             
@@ -166,7 +184,7 @@ namespace LoLTournaments.Application.Services
                                           $"Request : {model}");
 
             room.Accepted.Replace(memberIds);
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync();
         }
 
         private RuntimeRoom RequestRoom(RequestSession model)

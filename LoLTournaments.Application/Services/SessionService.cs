@@ -2,6 +2,7 @@ using System.Dynamic;
 using LoLTournaments.Application.Exceptions;
 using LoLTournaments.Application.Runtime;
 using LoLTournaments.Domain.Abstractions;
+using LoLTournaments.Shared.Common;
 using LoLTournaments.Shared.Models;
 using LoLTournaments.Shared.Utilities;
 
@@ -38,10 +39,28 @@ namespace LoLTournaments.Application.Services
     public class SessionService : ISessionService
     {
         private readonly IRuntimeRepository<RuntimeSession> runtimeRepository;
+        private readonly IRuntimeBackupService<RuntimeSession> runtimeBackupService;
 
-        public SessionService(IRuntimeRepository<RuntimeSession> runtimeRepository)
+        public SessionService(
+            IRuntimeRepository<RuntimeSession> runtimeRepository,
+            IRuntimeBackupService<RuntimeSession> runtimeBackupService)
         {
             this.runtimeRepository = runtimeRepository;
+            this.runtimeBackupService = runtimeBackupService;
+            InitializeAsync();
+        }
+
+        private async void InitializeAsync()
+        {
+            try
+            {
+                await Task.Yield();
+                await runtimeBackupService.RestoreAsync();
+            }
+            catch (Exception e)
+            {
+                DefaultSharedLogger.Error(e);
+            }
         }
 
         public Task<dynamic> GetSessions()
@@ -157,7 +176,7 @@ namespace LoLTournaments.Application.Services
             return Task.FromResult<dynamic>(resultObj);
         } // TODO not used
 
-        public Task SetSessionData(ReceiveSessionData model)
+        public async Task SetSessionData(ReceiveSessionData model)
         {
             var session = RequestSession(model);
 
@@ -198,10 +217,10 @@ namespace LoLTournaments.Application.Services
                         $"Set session data operation failed, Unknown [{nameof(model.PropertyName)} : {model.PropertyName}]");
             }
 
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync(true);
         }
 
-        public Task SetStageData(ReceiveStageData model)
+        public async Task SetStageData(ReceiveStageData model)
         {
             var stage = RequestStage(model);
             switch (model.PropertyName)
@@ -235,10 +254,10 @@ namespace LoLTournaments.Application.Services
                         $"Set stage data operation failed, Unknown [{nameof(model.PropertyName)} : {model.PropertyName}]");
             }
 
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync(true);
         } // TODO not used
 
-        public Task SetGroupData(ReceiveGroupData model)
+        public async Task SetGroupData(ReceiveGroupData model)
         {
             var group = RequestGroup(model);
             switch (model.PropertyName)
@@ -272,10 +291,10 @@ namespace LoLTournaments.Application.Services
                         $"Set group data operation failed, Unknown [{nameof(model.PropertyName)} : {model.PropertyName}]");
             }
 
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync(true);
         }
 
-        public Task SetGameData(ReceiveGameData model)
+        public async Task SetGameData(ReceiveGameData model)
         {
             var game = RequestGame(model);
             switch (model.PropertyName)
@@ -312,19 +331,19 @@ namespace LoLTournaments.Application.Services
                         $"Set game data operation failed, Unknown [{nameof(model.PropertyName)} : {model.PropertyName}]");
             }
 
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync();
         }
 
-        public Task UpdateSession(ReceiveSessionData model)
+        public async Task UpdateSession(ReceiveSessionData model)
         {
             if (!model.Data.TryGetValue(out RuntimeSession[] sessions))
                 throw new ClientException($"Can't update sessions, sessions is missing : {model}.");
 
             runtimeRepository.Replace(sessions);
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync(true);
         }
         
-        public Task UpdateStage(ReceiveStageData model)
+        public async Task UpdateStage(ReceiveStageData model)
         {
             if (!model.Data.TryGetValue(out RuntimeStage[] stages))
                 throw new ClientException($"Can't update stage, stages is missing : {model}.");
@@ -332,10 +351,10 @@ namespace LoLTournaments.Application.Services
             var session = RequestSession(model);
             session.Stages.Replace(stages);
             session.Stages.SortIfOrderable();
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync(true);
         }
         
-        public Task UpdateGroup(ReceiveGroupData model)
+        public async Task UpdateGroup(ReceiveGroupData model)
         {
             if (!model.Data.TryGetValue(out RuntimeGroup[] groups))
                 throw new ClientException($"Can't update group, groups is missing : {model}.");
@@ -343,10 +362,10 @@ namespace LoLTournaments.Application.Services
             var stage = RequestStage(model);
             stage.Groups.Replace(groups);
             stage.Groups.SortIfOrderable();
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync(true);
         }
         
-        public Task UpdateGame(ReceiveGameData model)
+        public async Task UpdateGame(ReceiveGameData model)
         {
             if (!model.Data.TryGetValue(out RuntimeGame[] games))
                 throw new ClientException($"Can't update game, games is missing : {model}.");
@@ -354,60 +373,60 @@ namespace LoLTournaments.Application.Services
             var group = RequestGroup(model);
             group.Games.Replace(games);
             group.Games.SortIfOrderable();
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync();
         }
         
-        public Task UpdateMember(ReceiveSessionData model)
+        public async Task UpdateMember(ReceiveSessionData model)
         {
             if (!model.Data.TryGetValue(out RuntimeMember[] members))
                 throw new ClientException($"Can't update session member, members is missing : {model}.");
 
             var session = RequestSession(model);
             session.Members.Replace(members);
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync();
         }
 
-        public Task RemoveSession(RequestSession model)
+        public async Task RemoveSession(RequestSession model)
         {
             runtimeRepository.Remove(model.SessionId);
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync(true);
         }
         
-        public Task RemoveStage(RequestStage model)
+        public async Task RemoveStage(RequestStage model)
         {
             var session = RequestSession(model);
             var stage = session.Stages.FirstOrDefault(x => x.Id == model.StageId);
             session.Stages.Remove(stage);
             session.Stages.SortIfOrderable();
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync(true);
         }
         
-        public Task RemoveGroup(RequestGroup model)
+        public async Task RemoveGroup(RequestGroup model)
         {
             var stage = RequestStage(model);
             var group = stage.Groups.FirstOrDefault(x => x.Id == model.GroupId);
             stage.Groups.Remove(group);
             stage.Groups.SortIfOrderable();
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync(true);
         }
         
-        public Task RemoveGame(RequestGame model)
+        public async Task RemoveGame(RequestGame model)
         {
             var group = RequestGroup(model);
             var game = RequestGame(model);
             group.Games.Remove(game);
             group.Games.SortIfOrderable();
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync(true);
         }
         
-        public Task RemoveMember(ReceiveSessionData model)
+        public async Task RemoveMember(ReceiveSessionData model)
         {
             if (!model.Data.TryGetValue(out RuntimeMember[] members))
                 throw new ClientException($"Can't remove session member, members is missing : {model}.");
             
             var session = RequestSession(model);
             members.Foreach(member => session.Members.Remove(session.Members.FirstOrDefault(x=> x.Id == member.Id)));
-            return Task.CompletedTask;
+            await runtimeBackupService.BackupAsync(true);
         }
 
         private RuntimeSession RequestSession(RequestSession model)

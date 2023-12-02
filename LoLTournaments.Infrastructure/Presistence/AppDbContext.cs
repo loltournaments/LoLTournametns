@@ -3,6 +3,7 @@ using LoLTournaments.Shared.Models;
 using LoLTournaments.Shared.Utilities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace LoLTournaments.Infrastructure.Presistence
 {
@@ -19,6 +20,9 @@ namespace LoLTournaments.Infrastructure.Presistence
             });
             base.OnModelCreating(modelBuilder);
         }
+        
+        public DbSet<SessionEntity> Sessions { get; set; }
+        public DbSet<RoomEntity> Rooms { get; set; }
     }
 
 }

@@ -1,6 +1,7 @@
 ﻿using LoLTournaments.Application.Runtime;
 using LoLTournaments.Application.Services;
 using LoLTournaments.Domain.Abstractions;
+using LoLTournaments.Domain.Entities;
 using LoLTournaments.Infrastructure.Presistence;
 using LoLTournaments.Shared.Abstractions;
 using LoLTournaments.Shared.Common;
@@ -27,6 +28,8 @@ namespace LoLTournaments.Application.Infrastructure
             services.AddSingleton<IAppSettings>(appSettings);
             services.AddSingleton<ISharedConfig>(appSettings);  
             services.AddSingleton<ISharedLogger, AppLoggerService>();
+            services.AddSingleton<IRuntimeBackupService<RuntimeRoom>, BackupService<RoomEntity, RuntimeRoom>>();  
+            services.AddSingleton<IRuntimeBackupService<RuntimeSession>, BackupService<SessionEntity, RuntimeSession>>();  
             services.AddSingleton<IRuntimeRepository<RuntimeRoom>, RuntimeRepository<RuntimeRoom>>();  
             services.AddSingleton<IRuntimeRepository<RuntimeSession>, RuntimeRepository<RuntimeSession>>();
         }
