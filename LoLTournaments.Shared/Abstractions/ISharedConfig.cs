@@ -14,6 +14,7 @@
         int MinHalfFinalMembers { get; }
         int MaxHalfFinalMembers { get; }
         int MinHalfFinalGroups { get; }
+        int MaxWinCountPlaces { get; }
         int MinMembersToFillBots { get; }
         string BotName { get; }
         string BotId { get; }

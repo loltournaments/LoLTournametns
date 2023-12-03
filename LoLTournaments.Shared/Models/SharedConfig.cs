@@ -17,6 +17,7 @@ namespace LoLTournaments.Shared.Models
         public int MinHalfFinalMembers { get; set; }
         public int MaxHalfFinalMembers  { get; set; }
         public int MinHalfFinalGroups { get; set; }
+        public int MaxWinCountPlaces { get; set; }
         public int MinMembersToFillBots { get; set; }
         public string BotName { get; set; }
         public string BotId { get; set; }

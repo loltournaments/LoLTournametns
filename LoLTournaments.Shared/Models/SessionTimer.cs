@@ -3,9 +3,9 @@
 namespace LoLTournaments.Shared.Models
 {
 
-    public struct SessionTimer
+    public class SessionTimer
     {
-        public DateTime End { get; set; }
+        public virtual DateTime End { get; set; }
         public TimerState State { get; set; }
     }
 
