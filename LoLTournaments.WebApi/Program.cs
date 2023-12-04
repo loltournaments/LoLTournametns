@@ -14,7 +14,6 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
-// Di Setup
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options
@@ -52,8 +51,12 @@ builder.Services.AddResponseCompression(o =>
 {
     o.MimeTypes = new[]
     {
-        "application/octet-stream", "application/wasm", "application/data", "application/vnd.unity",
-        "application/x-gzip"
+        "application/octet-stream",
+        "application/wasm", 
+        "application/data", 
+        "application/vnd.unity",
+        "application/gzip",
+        "application/x-gzip",
     };
     o.Providers.Add<BrotliCompressionProvider>();
     o.Providers.Add<GzipCompressionProvider>();
@@ -78,35 +81,32 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-// Di Setup
 
 var app = builder.Build();
 
+
+DefaultSharedLogger.Initialize(app.Services.GetRequiredService<ISharedLogger>());
+app.UseFileServer();
 app.UseResponseCompression();
 app.UseHttpsRedirection();
 
 var provider = new FileExtensionContentTypeProvider();
 
-provider.Mappings.Remove(".unityweb");
-provider.Mappings.Remove(".wasm");
-provider.Mappings.Remove(".data");
-provider.Mappings.Remove(".js");
-
-provider.Mappings.Add(".wasm", "application/wasm");
+provider.Mappings.Add(".wasm.br", "application/wasm");
+provider.Mappings.Add(".wasm.gz", "application/wasm");
 provider.Mappings.Add(".unityweb", "application/octet-stream");
+provider.Mappings.Add(".js.unityweb", "application/javascript");
 provider.Mappings.Add(".data", "application/octet-stream");
-provider.Mappings.Add(".js", "application/javascript");
-DefaultSharedLogger.Initialize(app.Services.GetRequiredService<ISharedLogger>());
+provider.Mappings.Add(".data.br", "application/octet-stream");
+provider.Mappings.Add(".data.gz", "application/octet-stream");
+provider.Mappings.Add(".js.br", "application/javascript");
+provider.Mappings.Add(".js.gz", "application/javascript");
+
 app.UseStaticFiles(new StaticFileOptions
 {
-    ContentTypeProvider = provider,
-
-    OnPrepareResponse = context =>
-    {
-        if (context.Context.Request.Path.Value != null && context.Context.Request.Path.Value.EndsWith(".unityweb"))
-            context.Context.Response.Headers.Add("content-encoding", "br");
-    }
+    ContentTypeProvider = provider
 });
+
 
 app.UseSwagger();
 app.UseSwaggerUI(o =>
@@ -116,10 +116,10 @@ app.UseSwaggerUI(o =>
     o.RoutePrefix = "swagger";
 });
 app.UseCors("AllowAll");
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.MapGet("/", () => "Hello World!");
 var appTask = app.RunAsync();
 app.Services.CreateScope().ServiceProvider.GetService<BootstrapService>();
 await appTask;
