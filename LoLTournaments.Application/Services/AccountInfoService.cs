@@ -48,7 +48,7 @@ namespace LoLTournaments.Application.Services
             {
                 var url = appSettings.StatsPath
                     .Replace("[region]", appSettings.Region)
-                    .Replace("[name]", userName)
+                    .Replace("[name]", userName.Replace("#","-"))
                     .Replace(" ", "%20");
                 
                 using var client = new HttpClient();
