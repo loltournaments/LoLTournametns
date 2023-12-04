@@ -87,3 +87,4 @@ LoLTournaments.Shared/obj
 LoLTournaments.WebApi/bin
 LoLTournaments.WebApi/obj
 LoLTournaments.WebApi/wwwroot/
+Release/

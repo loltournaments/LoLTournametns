@@ -123,3 +123,4 @@ app.MapControllers();
 var appTask = app.RunAsync();
 app.Services.CreateScope().ServiceProvider.GetService<BootstrapService>();
 await appTask;
+Console.ReadKey();
