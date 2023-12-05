@@ -63,10 +63,7 @@ builder.Services.AddResponseCompression(o =>
     o.EnableForHttps = true;
 });
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll", policyBuilder => policyBuilder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-});
+builder.Services.AddCors();
 
 ApplicationDi.Install(builder.Services, builder.Configuration);
 builder.Services.AddResponseCaching();
@@ -88,7 +85,6 @@ var app = builder.Build();
 DefaultSharedLogger.Initialize(app.Services.GetRequiredService<ISharedLogger>());
 app.UseFileServer();
 app.UseResponseCompression();
-app.UseHttpsRedirection();
 
 var provider = new FileExtensionContentTypeProvider();
 
@@ -115,7 +111,7 @@ app.UseSwaggerUI(o =>
     o.DocumentTitle = $"{VersionInfo.SolutionName}";
     o.RoutePrefix = "swagger";
 });
-app.UseCors("AllowAll");
+app.UseCors(policyBuilder => policyBuilder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
