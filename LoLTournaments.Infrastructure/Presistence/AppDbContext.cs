@@ -3,7 +3,6 @@ using LoLTournaments.Shared.Models;
 using LoLTournaments.Shared.Utilities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace LoLTournaments.Infrastructure.Presistence
 {

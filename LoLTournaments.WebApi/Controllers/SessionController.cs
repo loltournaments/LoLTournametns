@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using LoLTournaments.Application.Services;
 using LoLTournaments.Shared.Models;
 using LoLTournaments.WebApi.Utilities;

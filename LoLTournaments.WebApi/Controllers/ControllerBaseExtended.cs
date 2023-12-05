@@ -1,5 +1,7 @@
-﻿using LoLTournaments.Application.Exceptions;
+﻿using System;
+using LoLTournaments.Application.Exceptions;
 using LoLTournaments.Shared.Common;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LoLTournaments.WebApi.Controllers

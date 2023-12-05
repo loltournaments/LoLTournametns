@@ -1,15 +1,22 @@
+using System;
 using LoLTournaments.Application.Infrastructure;
+using LoLTournaments.Application.Runtime;
 using LoLTournaments.Application.Services;
 using LoLTournaments.Domain.Entities;
 using LoLTournaments.Infrastructure.Presistence;
+using LoLTournaments.Infrastructure.Presistence.DbSeed;
 using LoLTournaments.Shared.Abstractions;
 using LoLTournaments.Shared.Common;
 using LoLTournaments.WebApi.Utilities;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 
@@ -81,8 +88,6 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var app = builder.Build();
 
-
-DefaultSharedLogger.Initialize(app.Services.GetRequiredService<ISharedLogger>());
 app.UseFileServer();
 app.UseResponseCompression();
 
@@ -116,7 +121,20 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-var appTask = app.RunAsync();
-app.Services.CreateScope().ServiceProvider.GetService<BootstrapService>();
-await appTask;
-Console.ReadKey();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var dbSeederService = services.GetRequiredService<IDbSeedService>();
+
+    var logger = services.GetRequiredService<ISharedLogger>();
+    DefaultSharedLogger.Initialize(logger);
+            
+    await dbSeederService.Migrate();      
+    await dbSeederService.Seed();
+    await dbSeederService.CleanUp();
+    await services.GetRequiredService<IRuntimeBackupService<RuntimeRoom>>().RestoreAsync();
+    await services.GetRequiredService<IRuntimeBackupService<RuntimeSession>>().RestoreAsync();
+}
+
+await app.RunAsync();

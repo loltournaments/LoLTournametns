@@ -1,9 +1,9 @@
-﻿using LoLTournaments.Application.Bootstraps;
-using LoLTournaments.Application.Runtime;
+﻿using LoLTournaments.Application.Runtime;
 using LoLTournaments.Application.Services;
 using LoLTournaments.Domain.Abstractions;
 using LoLTournaments.Domain.Entities;
 using LoLTournaments.Infrastructure.Presistence;
+using LoLTournaments.Infrastructure.Presistence.DbSeed;
 using LoLTournaments.Shared.Abstractions;
 using LoLTournaments.Shared.Common;
 using Microsoft.Extensions.Configuration;
@@ -18,10 +18,9 @@ namespace LoLTournaments.Application.Infrastructure
         {
             var appSettings = configuration.GetSection("AppSettings").Get<AppSettings>();
             services.AddAutoMapper(typeof(AppMappingProfile));
-            services.AddScoped<BootstrapService>();
-            services.AddScoped<IBootstrapCmd, AppBootstarp>();
             
             services.AddScoped<IDbRepository, DbRepository<AppDbContext>>();
+            services.AddScoped<IDbSeedService, DbSeedService<AppDbContext>>();
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<ILobbyService, LobbyService>();
             services.AddScoped<ISessionService, SessionService>();
