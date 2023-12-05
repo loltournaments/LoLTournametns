@@ -38,6 +38,13 @@
     <ItemGroup>
       <_ContentIncludedByDefault Remove="wwwroot\Uploads\Render_b5e03bf5-9162-4dae-b175-d8fefe0ea163.png" />
       <_ContentIncludedByDefault Remove="wwwroot\Uploads\Render_d13c7688-1278-49bf-919a-0d3b1760f0f8.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\Build\LoLTournaments.data.unityweb" />
+      <_ContentIncludedByDefault Remove="wwwroot\Build\LoLTournaments.framework.js.unityweb" />
+      <_ContentIncludedByDefault Remove="wwwroot\Build\LoLTournaments.loader.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\Build\LoLTournaments.wasm.unityweb" />
+      <_ContentIncludedByDefault Remove="wwwroot\TemplateData\favicon.ico" />
+      <_ContentIncludedByDefault Remove="wwwroot\TemplateData\fullscreen-button.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\TemplateData\style.css" />
     </ItemGroup>
 
 </Project>
