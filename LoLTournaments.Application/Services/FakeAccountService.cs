@@ -6,19 +6,12 @@ using LoLTournaments.Shared.Common;
 using LoLTournaments.Shared.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace LoLTournaments.Application.Services
 {
-
-    public class FakeName
-    {
-        public string Name { get; set; }
-    }
-
     public interface IFakeAccountService
     {
-        Task<Account[]> GenerateAsync(int? count = null);
+        Task<Account[]> GenerateAsync();
         Task<Account> AddBotAccount();
     }
 
@@ -45,9 +38,8 @@ namespace LoLTournaments.Application.Services
             this.userManager = userManager;
         }
 
-        public async Task<Account[]> GenerateAsync(int? count = null)
+        public async Task<Account[]> GenerateAsync()
         {
-            var fakeAccountCount = count ?? appSettings.FakeAccountCount;
             var fakeAccount = await dbRepository.Get<UserEntity>()
                 .Where(x => x.Permission == DefaultPermissions)
                 .ToListAsync();
@@ -56,35 +48,10 @@ namespace LoLTournaments.Application.Services
                 .Select(x => x.UserName)
                 .ToList();
 
-            if (existNames.Count >= appSettings.FakeAccountCount)
+            if (existNames.Count >= appSettings.FakeUserNames.Count)
                 return mapper.Map<Account[]>(fakeAccount);
 
-            var retryCount = 0;
-            var newUserNames = new List<string>();
-
-            while (existNames.Count + newUserNames.Count < fakeAccountCount && retryCount < 3)
-            {
-                try
-                {
-                    using var client = new HttpClient();
-                    client.Timeout = Timeout.InfiniteTimeSpan;
-                    using var request = new HttpRequestMessage(HttpMethod.Get, appSettings.FakeAccountPath);
-                    using var response = await client.SendAsync(request);
-                    var jsonData = await response.Content.ReadAsStringAsync();
-                    var fakeName = JsonConvert.DeserializeObject<FakeName>(jsonData);
-
-                    if (newUserNames.Contains(fakeName!.Name))
-                        continue;
-
-                    newUserNames.Add(fakeName.Name);
-                    retryCount = 0;
-                }
-                catch (Exception e)
-                {
-                    DefaultSharedLogger.Error(e);
-                    retryCount++;
-                }
-            }
+            var newUserNames = appSettings.FakeUserNames.Except(existNames).ToList();
 
             var fakeAccounts = newUserNames.Distinct().Select(name => new Account
             {

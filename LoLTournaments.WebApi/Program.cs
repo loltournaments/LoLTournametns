@@ -1,4 +1,3 @@
-using System;
 using LoLTournaments.Application.Infrastructure;
 using LoLTournaments.Application.Runtime;
 using LoLTournaments.Application.Services;
@@ -9,14 +8,10 @@ using LoLTournaments.Shared.Abstractions;
 using LoLTournaments.Shared.Common;
 using LoLTournaments.WebApi.Utilities;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 
@@ -114,7 +109,7 @@ app.UseSwaggerUI(o =>
 {
     o.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
     o.DocumentTitle = $"{VersionInfo.SolutionName}";
-    o.RoutePrefix = "swagger";
+    o.RoutePrefix = "swagger-admin";
 });
 app.UseCors(policyBuilder => policyBuilder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 app.UseRouting();
